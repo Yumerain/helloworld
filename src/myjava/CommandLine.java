@@ -7,15 +7,14 @@ import java.util.Locale;
 public class CommandLine {
 	
 	public static void main(String[] args) {
-		Locale locale = Locale.getDefault();
-		System.out.println(locale.getLanguage());
+		new CommandLine().start();
 	}
 
 	private BufferedReader reader;
 
 	public CommandLine(){
 		try {
-			reader = new BufferedReader(new InputStreamReader(System.in, System.getProperty("file.encodin")));
+			reader = new BufferedReader(new InputStreamReader(System.in, System.getProperty("file.encoding")));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -32,6 +31,8 @@ public class CommandLine {
 					System.out.println("== Bye!Bye! ==");
 					break;
 				}
+				Interpreter ipt = new Interpreter(line);
+				System.out.println(ipt.expr());
 			} while (line != null);
 		} catch (Exception e) {
 			e.printStackTrace();

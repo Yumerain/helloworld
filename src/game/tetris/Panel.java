@@ -1,11 +1,10 @@
 package game.tetris;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
-
-import org.loon.framework.javase.game.core.graphics.LColor;
 
 public class Panel extends JPanel implements Runnable{
 	
@@ -41,7 +40,7 @@ public class Panel extends JPanel implements Runnable{
 		if (showFPS) {
 			tickFrames();
 			g.setFont(fpsFont);
-			g.setColor(LColor.white);
+			g.setColor(Color.white);
 			g.drawString("FPS:" + currFPS, 10, 25);
 		}
 	}

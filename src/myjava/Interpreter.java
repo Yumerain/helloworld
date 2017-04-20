@@ -1,10 +1,11 @@
 package myjava;
 
+import jdk.nashorn.internal.parser.TokenKind;
+
 public class Interpreter {
 	
 	public String text;
 	public int pos = 0;
-	public Token currToken = null;
 	public char currChar;
 	
 	public Interpreter(String text){
@@ -12,10 +13,6 @@ public class Interpreter {
 		this.currChar = text.charAt(pos);
 	}
 	
-	public void error(){
-		throw new RuntimeException("Error parsing input");
-	}
-
 	public void advance(){
 		pos++;
 		if(pos > text.length() - 1)
@@ -29,15 +26,50 @@ public class Interpreter {
 	}
 	
 	public Token nextToken() {
-		while(currChar > 0){
+		while(pos < text.length()){
+			// 空格
+			if (currChar == ' ') {
+				pos++;
+				continue;
+			}
 			
+			// 整数
+			if (currChar >= '0' && currChar <= '9') {
+				pos++;
+				return new Token(Token.Type.INTEGER, Integer.valueOf(String.valueOf(currChar)));
+			}
+			
+			// 算术运算符
+			if (Operator.isMathOperator(currChar)) {
+				pos++;
+				switch (currChar) {
+				case '+': return new Operator(Token.Type.OP_PLUS, currChar);
+				case '-': return new Operator(Token.Type.OP_MINUS, currChar);
+				case '*': return new Operator(Token.Type.OP_MULTIPLY, currChar);
+				case '/': return new Operator(Token.Type.OP_DIVISION, currChar);
+				}
+			}
+			
+			throw new RuntimeException("Error parsing input");
 		}
-		return null;
+		
+		// 结束
+		return new Token(Token.Type.EOF, null);
 	}
 	
+	
+	/** 
+	 * 该函数校验（验证）标记符序列是否与预期序列一致，比如，INTEGER -> PLUS -> INTEGER。
+	 * 在结构确认无误后，它将加号左边标记符的值与其右边标记符值相加，生成（表达式的）结果，
+	 * 这样，就将你传给解释器的表达式，成功计算出算术表达式的结果。 
+	 */
 	public Object expr() {
-		currToken = nextToken();
-		return null;
+		Token left = nextToken();
+		
+		Operator op = (Operator)nextToken();
+		
+		Token right = nextToken();
+		return op.eval(left, right);
 	}
 	
 }
