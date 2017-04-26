@@ -2,7 +2,10 @@ package game.tetris;
 
 import java.awt.Color;
 
-/** 单元：小节、小块 */
+/** 
+ * 小节、小块
+ * @author zhangyu
+ */
 public class Block {
 	
 	public Block(Color color, int r, int c){
@@ -36,7 +39,5 @@ public class Block {
 	public void setColIndex(int colIndex) {
 		this.colIndex = colIndex;
 	}
-	
-	
 
 }

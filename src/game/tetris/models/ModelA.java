@@ -1,5 +1,6 @@
 package game.tetris.models;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,52 +9,60 @@ import game.tetris.Block;
 
 public class ModelA extends BaseModel {
 
+	//private int offerX, offerY;
+	private int offerRow, offerCol;
+	private int rows, cols;
+
 	private List<Block> blocks = new ArrayList<Block>(1);
-	
-	public ModelA(){
-		//Block block = new Block(randomColor(), r, c);
+
+	public ModelA(int rows, int cols) {
+		this.offerCol = 0;
+		this.offerRow = 0;
+		this.rows = rows;
+		this.cols = cols;
+		blocks.add(new Block(randomColor(), 0, cols / 2));
 	}
 
 	@Override
 	public void anticlockwiseRotating() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void clockwiseRotating() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void dropDown() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void moveDown() {
-		// TODO Auto-generated method stub
-		
+		if(offerRow < rows - 1){
+			offerRow += 1;
+		}
 	}
 
 	@Override
 	public void moveLeft() {
-		// TODO Auto-generated method stub
-		
+		if(offerCol > 0){
+			offerCol -= 1;
+		}
 	}
 
 	@Override
 	public void moveRight() {
-		// TODO Auto-generated method stub
-		
+		if(offerCol < cols - 1){
+			offerCol += 1;
+		}
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		
+		for (int i = 0; i < blocks.size(); i++) {
+			Block block = blocks.get(i);
+			g.setColor(Color.white);
+			g.drawRect((offerCol + block.getColIndex())*UNIT, (offerRow + block.getRowIndex())*UNIT, UNIT, UNIT);
+		}
 	}
-	
+
 }

@@ -1,7 +1,5 @@
 package myjava;
 
-import jdk.nashorn.internal.parser.TokenKind;
-
 public class Interpreter {
 	
 	public String text;
@@ -13,40 +11,28 @@ public class Interpreter {
 		this.currChar = text.charAt(pos);
 	}
 	
-	public void advance(){
-		pos++;
-		if(pos > text.length() - 1)
-			currChar = 0;
-		else
-			currChar = text.charAt(pos);
-	}
-	
-	public void skipWhitespace(){
-		
-	}
-	
 	public Token nextToken() {
 		while(pos < text.length()){
+			
+			currChar = text.charAt(pos++);
+			
 			// 空格
 			if (currChar == ' ') {
-				pos++;
 				continue;
 			}
 			
 			// 整数
 			if (currChar >= '0' && currChar <= '9') {
-				pos++;
 				return new Token(Token.Type.INTEGER, Integer.valueOf(String.valueOf(currChar)));
 			}
 			
 			// 算术运算符
 			if (Operator.isMathOperator(currChar)) {
-				pos++;
 				switch (currChar) {
-				case '+': return new Operator(Token.Type.OP_PLUS, currChar);
-				case '-': return new Operator(Token.Type.OP_MINUS, currChar);
-				case '*': return new Operator(Token.Type.OP_MULTIPLY, currChar);
-				case '/': return new Operator(Token.Type.OP_DIVISION, currChar);
+				case '+': 	return new Operator(Token.Type.OP_PLUS, currChar);
+				case '-': 	return new Operator(Token.Type.OP_MINUS, currChar);
+				case '*': 	return new Operator(Token.Type.OP_MULTIPLY, currChar);
+				case '/': 	return new Operator(Token.Type.OP_DIVISION, currChar);
 				}
 			}
 			

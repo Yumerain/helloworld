@@ -2,6 +2,10 @@ package game.tetris;
 
 import java.awt.Graphics;
 
+/**
+ * 砖块接口
+ * @author zhangyu
+ */
 public interface Model {
 	
 	/** 逆时针方向旋转 */
@@ -10,7 +14,7 @@ public interface Model {
 	/** 顺时针方向旋转 */
 	void clockwiseRotating();
 	
-	/** 接下扔下到底 */
+	/** 直接下扔下到底 */
 	void dropDown();
 
 	/** 向下移动一格 */

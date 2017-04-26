@@ -1,5 +1,9 @@
 package myjava;
 
+/**
+ * ±ê¼Ç·û
+ * @author zhangyu
+ */
 public class Token {
 
 	public Type tokenType;
