@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="./resource/h5.css">
+<script type="text/javascript" src="./resource/jquery.min.js"></script>
+<title>快捷支付</title>
+</head>
+<body>
+	<header class="wx-header kj">
+		<p>快捷支付</p>
+	</header>
+	<form action="success.html" method="post">
+	<input name="phoneNo" id="phoneNo" type="hidden" value="">
+	<div class="main">
+		<div class="pay-phone">
+			<div class="phone-sen-add">
+				<span>银行卡</span>
+				<input type="text" name="cardNo" id="cardNo" onkeyup="this.value=this.value.replace(/\D/g,&#39;&#39;)" maxlength="21" placeholder="请输入银行卡号">
+			</div>
+			<div class="phone-sen-add">
+				<span>CVN2</span>
+				<input type="password" placeholder="请输入卡背面末三位" onkeyup="this.value=this.value.replace(/\D/g,&#39;&#39;)" name="cvn2" id="cvn2" maxlength="3">
+			</div>
+			<div class="phone-sen-add">
+				<span>有效期</span>
+				<input type="text" placeholder="请输入月份年份如 0821" id="expirydate" onkeyup="this.value=this.value.replace(/\D/g,&#39;&#39;)" name="expirydate" maxlength="4">
+			</div>
+		</div>
+		<div class="pay-phone mt10">
+			<div class="phone-sen-add">
+				<span>身份证</span>
+				<input type="text" placeholder="请输入身份证号码" maxlength="18" name="certsNo" id="certsNo">
+				<i class="fa fa-lg fa-eye " id="icon"></i>
+			</div>
+			<div class="phone-sen-add">
+				<span>姓&nbsp;&nbsp;&nbsp;&nbsp;名</span>
+				<input type="text" placeholder="请输入持卡人姓名" name="customerName" id="customerName">
+			</div>
+		</div>
+		<p class="yuedu"> 
+		    <label class="ui-checkbox-s">
+		        <input type="checkbox" name="checkbox" id="checkbox" checked="">
+		    </label>
+		     <a href="javascript:void(0);" class="cbyue">已阅读并同意《汇卡快捷支付服务协议》</a>
+		</p>
+		 <a href="javascript:void(0);" onclick="commit(this)" class="phone-wc">确认付款</a>
+	</div>
+	</form>
+	<div class="dialog">
+		<div class="xieyi">
+			<i class="fa fa-close"></i>
+			<h2 class="mb-10">快捷支付服务协议</h2>
+			<h5 class="mb-10">【审慎阅读】您在点击同意前，请您务必审慎阅读、充分理解协议中相关条款内容，其中包括：</h5>
+			<p class="mb-10 bolder">1、 与您约定免除或限制责任的条款；</p>
+			<p class="mb-10 bolder">2、 与您约定法律适用和管辖的条款；</p>
+			<p class="mb-10 bolder">3、 其他以粗体下划线标识的重要条款。</p>
+			<p class="mb-10">【特别提示】您通过网络页面点击确认或以其他方式（包括但不限于签字或签章确认等方式）接受本协议，即表示您与广州市汇卡优易城商务服务有限公司（以下简称“本公司”）已达成协议并同意接受本协议的全部约定内容。</p>
+			<p class="mb-10 bolder">在接受本协议之前，请您仔细阅读本协议的全部内容（特别是以粗体标注的内容）。如您不同意接受本协议的任意内容，或者无法准确理解相关条款含义的，请不要进行后续操作。</p>
+			<p class="mb-10">一、 概述本协议是广州市汇卡优易城商务服务有限公司（以下简称本公司）与您就快捷支付服务所订立的有效合约。</p>
+			<p class="mb-10">二、 双方权利义务</p>
+			<p class="mb-10">1、您应确保您是使用本服务的银行卡持有人，可合法、有效使用该银行卡且未侵犯任何第三方合法权益，否则因此造成本公司、持卡人损失的，您应负责赔偿并承担全部法律责任，包括但不限于终止或中止为您提供快捷支付服务，冻结交易款项等。</p>
+			<p class="mb-10 bolder">2、您应确保开通本服务所提供的手机号码为本人所有，并授权本公司可以通过第三方渠道对您所提供手机号码的真实性、有效性进行核实。</p>
+			<p class="mb-10 bolder">3、您同意本公司有权依据其自身判断对涉嫌欺诈或被他人控制并用于欺诈目的的交易采取相应的措施，上述措施包括但不限于对您此次的交易进行资金冻结、终止或中止为您提供快捷支付服务、处置涉嫌欺诈的资金等。</p>
+			<p class="mb-10 bolder">4、您应妥善保管银行卡、卡号、有效日期、卡背后三位数字、密码、发卡行预留的手机号码以及您使用快捷支付绑定的手机号码、来自于发卡行和/或本公司向您发送的登录校验码及支付验证信息等与银行卡或与快捷支付有关的一切信息。如您遗失或泄露前述信息的，您应及时通知发卡行及/或本公司，以减少可能发生的损失。无论是否已通知发卡行及/或本公司，因您的原因所致损失需由您自行承担。</p>
+			<p class="mb-10">5、您在使用本服务时，应当认真确认交易信息，包括且不限于商品名称、数量、金额等，并按本公司业务流程发出符合本协议约定的指令。<font class="bolder">您认可和同意：您发出的指令不可撤回或撤销，本公司一旦根据您的指令委托银行或第三方从银行卡中划扣资金给收款人，您不应以非本人意愿交易或其他任何原因要求本公司退款或承担其他责任。</font></p>
+			<p class="mb-10">6、您在对使用本服务过程中发出指令的真实性及有效性承担全部责任；您承诺，本公司依照您的指令进行操作的一切风险由您承担。</p>
+			<p class="mb-10 bolder">7、您认可您使用的快捷支付的记录数据、交易金额数据等均以本公司系统平台记录的数据为准。</p>
+			<p class="mb-10">8、您同意本公司有权留存您在快捷支付收单工具填写的相应信息，并授权本公司查询该银行卡信息，包括且不限于信用卡账单等内容，以供后续向您持续性地提供相应服务（包括但不限于将本信息用于向您推广、提供其他更加优质的产品或服务）。</p>
+			<p class="mb-10 bolder">9、出现下列情况之一的，本公司有权立即终止您使用本公司相关服务而无需承担任何责任：（1）将本服务用于非法目的；（2）违反本协议的约定；（3）违反本公司及/或本公司关联公司的相关规定；（4）本公司认为向您提供本服务存在风险的；（5）您的银行卡无效、有效期届满或注销（如有）。</p>
+			<p class="mb-10 bolder">10、若您未违反本公司及/或本公司关联公司的相关规定且因不能归责于您的原因，造成银行卡内资金通过本服务出现损失，且您未从中获益的，您可向本公司申请投诉。您应在知悉资金发生损失后及时通知本公司并按要求提交相关的申请材料和证明文件，本公司将协助进行处理。</p>
+			<p class="mb-10 bolder">11、若您又从其它渠道挽回了资金损失的，或有新证据证明您涉嫌欺诈的，或者发生您应当自行承担责任的其他情形，您应在第一时间通知本公司。若本公司已补偿相应的款项，本公司有权向您进行追偿。</p>
+			<p class="mb-10">三、 授权与承诺</p>
+			<p class="mb-10 bolder">1、 您保证使用本服务过程中提供的信息真实、准确、完整、有效，您为了使用本服务向本公司提供的所有信息，如姓名、身份证号、银行卡卡号及预留手机号，将全部成为您快捷支付服务信息的一部分。本公司按照您设置的相关信息为您提供相应服务，对于因您提供信息不真实或不完整所造成的损失由您自行承担。</p>
+			<p class="mb-10 bolder">2、 您授权本公司在您使用本服务期间或本服务终止后，基于为更好的向您提供服务之目的或向您推广其他产品/服务的需要，有权保留并使用您在使用本服务期间所形成的相关信息数据，包括但不限于提供给本公司及本公司之关联公司该等信息。同时该授权不可撤销。</p>
+			<p class="mb-10">四、 其他</p>
+			<p class="mb-10 bolder">1、您同意，本公司有权随时对本协议内容进行单方面的变更，无需另行单独通知您；若您在本协议变更生效后继续使用本服务的，表示您已接受变更修改后的协议内容，也将遵循变更修改后的协议内容使用本服务；若您不同意变更修改后的协议内容，您应在变更生效前停止使用本服务。</p>
+			2、 您同意，本协议之效力、解释、变更、执行与争议解决均适用中华人民共和国法律，没有相关法律规定的，参照通用国际商业惯例和（或）行业惯例。
+			<p class="mb-10 bolder">3、 您同意，因本协议产生之争议，双方应努力友好协商解决。如协商不成，本公司和您同意由本公司住所地法院管辖审理双方的纠纷或争议。</p>
+			<p>4、 本协议部分内容被有管辖权的法院认定为违法或无效的，不因此影响其他内容的效力。</p>
+			<a href="javascript:void(0);" onclick="agree();" class="phone-wc">同意</a>
+		</div>
+	</div>
+	
+	<div class="prompt" id="prompt">
+		<center><div id="msg"></div></center>
+	</div>
+	<i class="hotsale-end" style="display: inline;">本服务由中国民生银行提供</i>
+
+ <script type="text/javascript">    
+	function commit(btn){		
+		if("disabled"==$(btn).attr("disabled")){			
+			return;
+		}
+		if($("#cardNo").val()==""){
+			prompt("请输入银行卡号");
+			return;
+		}
+		if($("#cvn2").val()=="" || $("#cvn2").val().length!=3){
+			prompt("CVN2有误");
+			return;
+		}
+		if($("#expirydate").val()=="" || $("#expirydate").val().length!=4){
+			prompt("有效期有误");
+			return;
+		}
+		if($("#certsNo").val()==""){
+			prompt("请输入身份证号");
+			return;
+		}		
+		if($("#customerName").val()==""){
+			prompt("请输入持卡人姓名");
+			return;
+		}
+		if(!$("input[type='checkbox']").is(':checked')){
+			 prompt("请阅读协议");		
+			 return;
+		}
+		//判断有效期的月份是否有误
+		var data = $("#expirydate").val();
+		data = data.substring(0,2);
+		if(data ==0 || data>12){
+			prompt("有效期月份有误");
+			return;
+		}	
+		//$(btn).attr("disabled", "disabled");
+		//移除onclick事件
+		$(btn).removeAttr("onclick");
+		$(btn).css("backgroundColor", "#DDD");
+		$("form").submit();
+	}
+	//页面提示框
+	function prompt(msg){
+		$("#msg").html(msg);
+		$(".prompt").show().delay (2500).fadeOut ();
+	}
+	$(function(){
+		$(".cbyue").click(function(){
+			$(".dialog").show();
+		});
+		$(".fa-close").click(function(){
+			$(".dialog").hide();
+		});
+		$("#icon").click(function(){
+			var code = $("#certsNo");
+			var icon = $("#icon");
+			if(code.attr("type") == "text"){
+				code.attr("type","password");
+				icon.addClass("fa-eye-slash");
+				icon.removeClass("fa-eye");
+			}else{
+				code.attr("type","text");
+				icon.addClass("fa-eye");
+				icon.removeClass("fa-eye-slash");			
+			}			
+		});
+	});
+	function agree(){
+		$(".dialog").hide();
+		document.getElementById("checkbox").checked=true;
+	}
+    </script>
+</body>
+</html>

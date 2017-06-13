@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="./resource/h5.css">
+<script type="text/javascript" src="./resource/jquery.min.js"></script>
+<title>快捷支付</title>
+<style type="text/css">
+#fade {
+	display: none;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	z-index: 1001;
+	-moz-opacity: 0.8;
+	opacity: .80;
+	filter: alpha(opacity = 80);
+}
+#fade_wrap {
+	display: none;
+	position: absolute;
+	width: 100%;
+	min-height: 60%;
+	bottom: 0;
+	background-color: #fff;
+	z-index: 1002;
+	overflow: auto;
+	-moz-opacity: 0.90;
+	opacity: .90;
+	filter: alpha(opacity = 90);
+}
+
+#fade_title {
+	position: relative;
+	font-size: 1.2em;
+	text-align: center;
+	height: 2.4em;
+	line-height: 2.4em;
+	border-bottom: 1px solid #ccc;
+}
+
+#fade_back {
+	height: 2.4em;
+	line-height: 2.4em;
+	width: 2.4em;
+	top: 0;
+	left: 0;
+	position: absolute;
+	background-image:url("./images/btn-left.png");
+	background-size: 1em;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#notice {
+	font-size: 1em;
+	text-align: center;
+	height: 3em;
+	line-height: 3em;
+}
+
+#fade_content {
+	text-align: center;
+}
+
+#fade_content>input {
+	font-weight: bold;
+	font-size: 1.2em;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+</style>
+</head>
+<body>
+	<header class="wx-header kj">
+		<p>快捷支付</p>
+	</header>
+	<div class="main">
+		<div class="bank-list">
+		
+			<a href="javascript:void(0);" class="bank-car" onclick="commit()">
+				<div class="bank-logo">
+					<img src="./images/bank/ceb.png" class="img">
+					<span class="type">信用卡</span>
+				</div>
+				<div class="carnum">
+					628888******8888
+				</div>
+			</a>
+			
+		<form action="success.html" method="post">
+  			<input type="hidden" id="orderId" name="orderId" value="b5bb081d29ea40ae9fa7f3010205ae7f">
+  			<input type="hidden" id="cardId" name="cardId" value="6b27d2b30fa8498489e2b0644716c856">
+  		</form>
+			<a href="card_bind.html" class="bank-add clearfloat">
+				<i class="fa fa-credit-card fl"></i>
+				<span class="plus fl">＋</span><span class="addcar fl">添加银行卡</span>
+			</a>
+		</div>
+	</div>
+	<div id="fade"></div>
+	<div id="fade_wrap">
+		<div id="fade_title"><span id="fade_back" onclick="closeFade()"></span>输入验证信息</div>
+		<div>
+			<div id="notice">请输入CVN2码（卡背后末三位）</div>
+			<div id="fade_content"><input style="height: 30px;width: 50%;" id="identifyNo" name="identifyNo" type="password" maxlength="3"></div>
+			<a href="javascript:void(0)" class="phone-wc" onclick="identifyCommit(this)">确定</a>
+		</div>
+		<div class="prompt" id="prompt">
+		<center><div id="msg"></div></center>
+	</div>
+	</div>
+	
+	<i class="hotsale-end" style="display: inline;">本服务由中国民生银行提供</i>
+
+<script type="text/javascript">
+	function commit(orderId, cardId){
+		$("form").submit(); return;
+		$.ajax({
+			url:"URL验证模式配置",
+			dataType:"json",
+			success: function(data){
+		 		$("#orderId").val(orderId);
+				$("#cardId").val(cardId);
+				if(data.identify=="1" || data.identify=="2"){
+					$("#notice").text(data.message);
+					$("#identifyNo").attr("maxlength", data.maxlength);
+					$("#fade").show();
+					$("#fade_wrap").show();
+				}else{
+					$("form").submit();
+				}
+			},
+			error: function(){alert("出错了，请稍后再试……");}
+		});
+	}
+ 	function identifyCommit(btn){ 		
+ 		if("disabled"==$(btn).attr("disabled")){
+			return;
+		}
+ 		var identifyNo = $("#identifyNo").val();
+ 		if(identifyNo==""){
+ 			prompt("输入CVN2");
+ 	 		return;
+ 	 	}
+ 		//$(btn).attr("disabled", "disabled");
+ 		//移除onclick事件
+		$(btn).removeAttr("onclick");
+ 		$(btn).css("backgroundColor", "#DDD");
+		$("form").append($("#identifyNo")).submit();
+ 	}
+ 	function closeFade(){
+		$("#fade").hide();
+		$("#fade_wrap").hide();
+ 	}
+ 	//页面提示框
+	function prompt(msg){
+		$("#msg").html(msg);
+		$(".prompt").show().delay(2500).fadeOut();
+	}
+    </script>
+</body></html>

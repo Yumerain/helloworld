@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="./resource/h5.css">
+<script type="text/javascript" src="./resource/jquery.min.js"></script>
+<title>信用卡快捷支付-身份验证</title>
+</head>
+<body>
+	<header class="wx-header kj">
+		<p>快捷支付</p>
+	</header>
+	<div class="main">
+		<div class="pay-info">
+			<p class="je">付款金额：<em>99.99</em>元</p>
+			<p class="num">订单编号：8888888888</p>
+			<div class="content">
+				<div>商品信息：</div>
+				<p>把马云的天猫收购了</p>
+			</div>
+			
+		</div>
+	<form action="card_list.html" method="post">
+		<div class="pay-phone">
+			<div class="phone-sen">
+				<span>手机号</span>
+				<input type="text" id="phoneNo" name="phoneNo" onkeyup="this.value=this.value.replace(/\D/g,&#39;&#39;)" maxlength="11" placeholder="银行预留手机号">
+			</div>
+			<div class="phone-sen">
+				<span>验证码</span>
+				<input type="text" id="validateCode" name="validateCode" maxlength="6" placeholder="手机验证码">
+				<button type="button" onclick="send(this);" id="sendBtn" class="code">获取</button>		
+			</div>
+		</div>
+		<a href="javascript:void(0);" onclick="commit(this)" class="phone-wc">完成</a>
+	</form>
+	</div>
+	<div class="prompt" id="prompt">
+		<center><div id="msg"></div></center>
+	</div>
+	<i class="hotsale-end" style="display: inline;">本服务由中国民生银行提供</i>
+ 	<script type="text/javascript"> 	
+    // 发送
+	function send(btn){     	
+		if($("#phoneNo").val()=="" || $("#phoneNo").val().length !=11){
+			prompt("手机号格式有误");
+			return false;
+		}			
+		$(btn).attr("disabled",true);	
+		countdown(btn, 60);
+		//*
+		$.ajax({
+			url:"URL发送验证码",
+			type:"post",
+			data:"phoneNo="+$("#phoneNo").val() + "&orderNo=g700047529869316096",
+			dataType:"json",
+			success:function(data){
+				if("02" == data.code || "00" == data.code){
+					countdown(btn, data.data);
+				}else{
+					$(btn).removeAttr("disabled");
+				}
+				alert(data.message);
+			},
+			error:function(xhr){
+				alert("出错了，请稍候再试.");
+				$(btn).removeAttr("disabled");
+			}
+		});//*/
+	}
+	// 倒计时
+	var timer;
+	function countdown(btn, second){
+		if(timer)clearInterval(timer);
+		timer = setInterval(function(){
+			if(second<=0){
+				clearInterval(timer);
+				$("#sendBtn").text("获取");
+				$(btn).removeAttr("disabled");
+			}else{
+				$("#sendBtn").text(second);
+				second--;
+			}
+		}, 1000);
+	}
+	// 提交
+	function commit(btn){
+		location.href = "card_list.html";
+		if($("#phoneNo").val()==""){
+			prompt("请输入手机号");
+			return;
+		}
+		if($("#phoneNo").val().length!=11){
+			prompt("手机号为11位");
+			return;
+		}
+		if(isNaN($("#phoneNo").val())==true){
+			prompt("手机号请输入数字");
+			return;
+		}
+		if($("#validateCode").val()==""){
+			prompt("请输入验证码");
+			return;
+		}
+		$(btn).attr("disabled", "disabled");
+		$(btn).css("backgroundColor", "#DDD");
+		// ajax检测验证码是否正确，正确则提交
+		$.ajax({
+			url:"#检测验证码",
+			type:"post",
+			data:"phoneNo="+$("#phoneNo").val()+"&validateCode="+$("#validateCode").val(),
+			dataType:"json",
+			success:function(data){
+				console.log(data);
+				if(data.result==true)
+					$("form").submit();
+				else {
+					prompt(data.message);
+					$(btn).removeAttr("disabled");
+					$(btn).css("backgroundColor", "#c4b16f");
+				}
+			},
+			error:function(xhr){
+				prompt("出错了，请稍候再试.");
+				$(btn).removeAttr("disabled");
+				$(btn).css("backgroundColor", "#c4b16f");
+			}
+		});
+		
+	}
+	//页面提示框
+	function prompt(msg){
+		$("#msg").html(msg);
+		$(".prompt").show().delay (2500).fadeOut ();
+	}
+    </script>
+</body>
+</html>
