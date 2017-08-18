@@ -16,8 +16,8 @@ public class Interpreter {
 			
 			currChar = text.charAt(pos++);
 			
-			// ¿Õ¸ñ
-			if (currChar == ' ') {
+			// ¿Õ°××Ö·û
+			if (currChar == ' ' || currChar == '\t' || currChar == '\r' || currChar == '\n') {
 				continue;
 			}
 			

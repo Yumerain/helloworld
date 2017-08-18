@@ -1,7 +1,5 @@
 package myjava;
 
-import java.util.HashMap;
-
 public class Operator extends Token {
 	
 	public Operator(Type tokenType, Object value) {
