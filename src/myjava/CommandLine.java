@@ -30,7 +30,8 @@ public class CommandLine {
 					System.out.println("== Bye!Bye! ==");
 					break;
 				}
-				Interpreter ipt = new Interpreter(line);
+				Lexer lx = new Lexer(line);
+				Interpreter ipt = new Interpreter(lx);
 				System.out.println(ipt.expr());
 			} while (line != null);
 		} catch (Exception e) {

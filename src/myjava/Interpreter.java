@@ -2,45 +2,32 @@ package myjava;
 
 public class Interpreter {
 	
-	public String text;
-	public int pos = 0;
-	public char currChar;
+	protected Lexer lexer;
 	
-	public Interpreter(String text){
-		this.text = text;
-		this.currChar = text.charAt(pos);
+	protected Token currToken;
+	
+	public Interpreter(Lexer lexer){
+		this.lexer = lexer;
+		this.currToken = lexer.nextToken();
 	}
 	
-	public Token nextToken() {
-		while(pos < text.length()){
-			
-			currChar = text.charAt(pos++);
-			
-			// 空白字符
-			if (currChar == ' ' || currChar == '\t' || currChar == '\r' || currChar == '\n') {
-				continue;
-			}
-			
-			// 整数
-			if (currChar >= '0' && currChar <= '9') {
-				return new Token(Token.Type.INTEGER, Integer.valueOf(String.valueOf(currChar)));
-			}
-			
-			// 算术运算符
-			if (Operator.isMathOperator(currChar)) {
-				switch (currChar) {
-				case '+': 	return new Operator(Token.Type.OP_PLUS, currChar);
-				case '-': 	return new Operator(Token.Type.OP_MINUS, currChar);
-				case '*': 	return new Operator(Token.Type.OP_MULTIPLY, currChar);
-				case '/': 	return new Operator(Token.Type.OP_DIVISION, currChar);
-				}
-			}
-			
-			throw new RuntimeException("Error parsing input");
+	public void error() {
+		throw new RuntimeException("无效的语法");
+	}
+	
+	public void eat(Token.Type tokenType) {
+		if (currToken.tokenType == tokenType) {
+			currToken = lexer.nextToken();
+		} else {
+			error();
 		}
-		
-		// 结束
-		return new Token(Token.Type.EOF, null);
+	}
+	
+	public Object factor() {
+		// 现阶段默认固定整数
+		Token token = this.currToken;
+		eat(Token.Type.INTEGER);
+		return token.value;
 	}
 	
 	
@@ -50,12 +37,18 @@ public class Interpreter {
 	 * 这样，就将你传给解释器的表达式，成功计算出算术表达式的结果。 
 	 */
 	public Object expr() {
-		Token left = nextToken();
-		
-		Operator op = (Operator)nextToken();
-		
-		Token right = nextToken();
-		return op.eval(left, right);
+		Object result = factor();
+		while (currToken.tokenType == Token.Type.OP_MULTIPLY || currToken.tokenType == Token.Type.OP_DIVISION) {
+			if (currToken.tokenType == Token.Type.OP_MULTIPLY) {
+				eat(Token.Type.OP_MULTIPLY);
+				result = Integer.parseInt(String.valueOf(result)) * Integer.parseInt(String.valueOf(factor()));
+			}
+			else if (currToken.tokenType == Token.Type.OP_DIVISION) {
+				eat(Token.Type.OP_MULTIPLY);
+				result = Integer.parseInt(String.valueOf(result)) * Integer.parseInt(String.valueOf(factor()));
+			}
+		}
+		return result;
 	}
 	
 }

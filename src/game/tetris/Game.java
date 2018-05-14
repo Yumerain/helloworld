@@ -43,7 +43,7 @@ public class Game extends Thread implements KeyListener{
 	// 侧面信息面 板宽
 	public static final int SIDE = 100; 
 	
-	private ModelFactory modelFactory = ModelFactory.getInstance();
+	//private ModelFactory modelFactory = ModelFactory.getInstance();
 	// 正在下降的模块
 	private Model model;
 	// 下一个将要出现的模块
@@ -55,8 +55,8 @@ public class Game extends Thread implements KeyListener{
 		// 宽度要加一个侧面显示信息
 		this.width = cols * UNIT + SIDE;
 		this.height = rows * UNIT;
-		model = modelFactory.buildRandom(rows, cols);
-		nextModel = modelFactory.buildRandom(rows, cols);
+		//model = modelFactory.buildRandom(rows, cols);
+		//nextModel = modelFactory.buildRandom(rows, cols);
 	}
 	
 	
