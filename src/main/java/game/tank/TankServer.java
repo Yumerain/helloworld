@@ -5,16 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import org.apache.log4j.Logger;
+import java.util.logging.Logger;
 
 public class TankServer extends Thread{
 	
 	public static void main(String[] args) {
 		TankServer server = new TankServer();
-		// Æô¶¯·şÎñÏß³Ì
+		// å¯åŠ¨æœåŠ¡çº¿ç¨‹
 		server.start();
-		// ½ÓÊÜÊäÈë
+		// æ¥å—è¾“å…¥
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new InputStreamReader(System.in, "GBK"));
@@ -22,8 +21,8 @@ public class TankServer extends Thread{
 			while(!"stop".equals(line=reader.readLine())){
 				System.out.println(line);
 			}
-			System.out.println("stop ¡­¡­");
-			// ¹Ø±Õ
+			System.out.println("stop â€¦â€¦");
+			// å…³é—­
 			server.shutdown();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,7 +39,7 @@ public class TankServer extends Thread{
 		try {
 			serverSocket = new ServerSocket(2345);
 		} catch (IOException e) {
-			logger.error("·şÎñÆ÷Æô¶¯Ê§°Ü£º"+e.getMessage(), e);
+			logger.warning("æœåŠ¡å™¨å¯åŠ¨å¤±è´¥ï¼š"+e.getMessage());
 			System.exit(1);
 		}
 	}
@@ -50,14 +49,14 @@ public class TankServer extends Thread{
 	}
 	
 	public void run(){
-		// Ö»ÓĞÔÚÎ´¹Ø±ÕÊ±Ö´ĞĞ
+		// åªæœ‰åœ¨æœªå…³é—­æ—¶æ‰§è¡Œ
 		while(!serverSocket.isClosed()){
 			try {
-				logger.info("µÈ´ı¿Í»§¶Ë½ÓÈë¡­¡­");
+				logger.info("ç­‰å¾…å®¢æˆ·ç«¯æ¥å…¥â€¦â€¦");
 				Socket client = serverSocket.accept();
 				//new SocketHandler(client).start();
 			} catch (IOException e) {
-				logger.error("Á¬½ÓÊ±·¢Éú I/O ´íÎó:"+e.getMessage(), e);
+				logger.warning("è¿æ¥æ—¶å‘ç”Ÿ I/O é”™è¯¯:"+e.getMessage());
 			}
 		}
 	}

@@ -8,7 +8,7 @@ public class BpMain {
 	
 	public static void runEpoch(boolean debug, int count) {
 		double[][] inputs = new double[][] {{0, 1},{1, 0},{0, 0},{1, 1}};
-		double[][] outputs = new double[][] {{1}, {1}, {0}, {0}};
+		double[][] outputs = new double[][] {{0}, {0}, {0}, {1}};
 		
 		Network net = new Network(2, new int[] {2, 6, 1});
 		for (int i = 0; i < inputs.length; i++) {

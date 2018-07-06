@@ -3,48 +3,47 @@ package myhttp;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import org.apache.log4j.Logger;
+import java.util.logging.Logger;
 
 /**
- * ÇåËã×é.×ªÕËÍ¨ÏµÍ³×¨ÓÃÇáÁ¿¼¶HTTP·şÎñÆ÷
+ * æ¸…ç®—ç»„.è½¬è´¦é€šç³»ç»Ÿä¸“ç”¨è½»é‡çº§HTTPæœåŠ¡å™¨
  * @author zhangyu
  */
 public class QszHttpServer extends Thread {
 
-	// ÈÕÖ¾¹¤¾ß
-	private static Logger logger = Logger.getLogger(QszHttpServer.class);
+	// æ—¥å¿—å·¥å…·
+	private static Logger logger = Logger.getLogger(QszHttpServer.class.toString());
 
 	/**
-	 * ¼àÌı±¾µØ¶Ë¿ÚÊı¾İ
+	 * ç›‘å¬æœ¬åœ°ç«¯å£æ•°æ®
 	 * @param port
 	 */
 	public static void listen(int port){
 		try {
-			// Æô¶¯
+			// å¯åŠ¨
 			QszHttpServer server = new QszHttpServer(port);
 			server.start();
 			
-			logger.info("HTTP·şÎñÒÑ¾­Æô¶¯£¬ÕıÊ¼ÕìÌı±¾µØ["+port+"]¶Ë¿Ú");
+			logger.info("HTTPæœåŠ¡å·²ç»å¯åŠ¨ï¼Œæ­£å§‹ä¾¦å¬æœ¬åœ°["+port+"]ç«¯å£");
 		} catch (Exception e) {
-			logger.error("´íÎó£¬HTTPÕìÌı±¾µØ¶Ë¿Ú["+port+"]³ö´í£¬Æô¶¯Ê§°Ü£¡", e);
+			logger.warning("é”™è¯¯ï¼ŒHTTPä¾¦å¬æœ¬åœ°ç«¯å£["+port+"]å‡ºé”™ï¼Œå¯åŠ¨å¤±è´¥ï¼");
 			System.exit(0);
 		}
 	}
 	
-	/** ·şÎñ¶Ësocket */
+	/** æœåŠ¡ç«¯socket */
 	private ServerSocket serverSocket;
 	
 	/**
-	 * ¹¹Ôì·½·¨£¬ÕìÌıÒ»¸ö¶Ë¿Ú
+	 * æ„é€ æ–¹æ³•ï¼Œä¾¦å¬ä¸€ä¸ªç«¯å£
 	 */
 	private QszHttpServer (int port) throws IOException{
-		// ÕìÌı
+		// ä¾¦å¬
 		serverSocket = new ServerSocket(port);
 	}
 	
 	/**
-	 * ¹Ø±Õ·şÎñÆ÷
+	 * å…³é—­æœåŠ¡å™¨
 	 */
 	public void shutdown(){
 		if(serverSocket == null){
@@ -53,30 +52,30 @@ public class QszHttpServer extends Thread {
 		try {
 			serverSocket.close();
 		} catch (Exception e) {
-			logger.warn("·şÎñÆ÷¹Ø±Õ£º" + e.getMessage(), e);
+			logger.warning("æœåŠ¡å™¨å…³é—­ï¼š" + e.getMessage());
 			System.exit(0);
 		}
 	}
 
 	/**
-	 * ¿ªÆôÏß³ÌÖ´ĞĞ
+	 * å¼€å¯çº¿ç¨‹æ‰§è¡Œ
 	 */
 	public void run() {
 		Thread thread = Thread.currentThread();
-		thread.setName("HTTPÕìÌıÏß³Ìid=" + thread.getId());
+		thread.setName("HTTPä¾¦å¬çº¿ç¨‹id=" + thread.getId());
 		try {
-			// ¼ì²é±ê¼Ç
+			// æ£€æŸ¥æ ‡è®°
 			while(true){
-				// µÈ´ı¿Í»§¶ËÁ¬½Ó
+				// ç­‰å¾…å®¢æˆ·ç«¯è¿æ¥
 				Socket socket = null;
 				try {
-					logger.info("ÕıÔÚµÈ´ı¿Í»§¶Ë½ÓÈë¡­¡­");
+					logger.info("æ­£åœ¨ç­‰å¾…å®¢æˆ·ç«¯æ¥å…¥â€¦â€¦");
 					socket = serverSocket.accept();
 				} catch (Exception e) {
-					logger.error("µÈ´ı¿Í»§¶ËÁ¬½ÓÊ±³ö´í", e);
+					logger.warning("ç­‰å¾…å®¢æˆ·ç«¯è¿æ¥æ—¶å‡ºé”™");
 					int count = 5;
 					while(count>0){
-						logger.info(count+"ÃëºóÖØĞÂÕìÌı¡­¡­");
+						logger.info(count+"ç§’åé‡æ–°ä¾¦å¬â€¦â€¦");
 						count--;
 						try {
 							Thread.sleep(1000);
@@ -86,14 +85,14 @@ public class QszHttpServer extends Thread {
 					continue;
 				}
 				
-				logger.info("À´×Ô[" + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "]µÄ¿Í»§¶Ë½ÓÈë.");
-				// ´¦Àí¿Í»§¶ËÁ¬½Ó
+				logger.info("æ¥è‡ª[" + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "]çš„å®¢æˆ·ç«¯æ¥å…¥.");
+				// å¤„ç†å®¢æˆ·ç«¯è¿æ¥
 				ClientProcessor.process(socket);
 			}
 		} finally {
 			try {
 				serverSocket.close();
-				logger.info("¼ì²âµ½ÔËĞĞ±ê¼ÇËøÎÄ¼ş±»É¾³ı£¬ÒÑ¹Ø±ÕHTTP·şÎñÆ÷¡£");
+				logger.info("æ£€æµ‹åˆ°è¿è¡Œæ ‡è®°é”æ–‡ä»¶è¢«åˆ é™¤ï¼Œå·²å…³é—­HTTPæœåŠ¡å™¨ã€‚");
 				System.exit(0);
 			} catch (IOException e) {
 			}

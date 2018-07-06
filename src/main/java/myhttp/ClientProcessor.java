@@ -7,55 +7,55 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
-import org.apache.log4j.Logger;
 
 public class ClientProcessor extends Thread {
 
-	private static Logger logger = Logger.getLogger(ClientProcessor.class);
+	private static Logger logger = Logger.getLogger(ClientProcessor.class.toString());
 	
-	private static HttpProtocolException headExcpt = new HttpProtocolException("ÇëÇóÍ·²¿²»·ûºÏĞ­Òé");
+	private static HttpProtocolException headExcpt = new HttpProtocolException("è¯·æ±‚å¤´éƒ¨ä¸ç¬¦åˆåè®®");
 	
-	/** HTTPĞ­Òé¶¨ÒåµÄ»»ĞĞ·û */
+	/** HTTPåè®®å®šä¹‰çš„æ¢è¡Œç¬¦ */
 	private static final String CRLF = "\r\n";
 	
-	/** ÇëÇó±¨Í·Ã¿ĞĞ×î´ó×Ö·ûÊıÁ¿ */
+	/** è¯·æ±‚æŠ¥å¤´æ¯è¡Œæœ€å¤§å­—ç¬¦æ•°é‡ */
 	private static final int HEADLINE_MAX = 2048;
 	
-	/** ÇëÇó±¨Í·×î´ó¸öÊı */
+	/** è¯·æ±‚æŠ¥å¤´æœ€å¤§ä¸ªæ•° */
 	private static final int HEADCOUNT_MAX = 100;
 	
-	/** ·şÎñÆ÷±àÂë */
+	/** æœåŠ¡å™¨ç¼–ç  */
 	public static final String CHARSET = "GBK";
 	
 
-	/** ÉÏÏÂÎÄ´¦ÀíÆ÷ */
+	/** ä¸Šä¸‹æ–‡å¤„ç†å™¨ */
 	private Map<String, ContextHandler> contextHandlerMap = new HashMap<String, ContextHandler>();
 	
-	/** HTTPÇëÇó±¨Í· */
+	/** HTTPè¯·æ±‚æŠ¥å¤´ */
 	private Map<String, String> headers = new HashMap<String, String>(10);
 	
-	/** HTTP×´Ì¬ */
+	/** HTTPçŠ¶æ€ */
 	private int statusCode = 200;
 	
 	private String uri;
 	private String method;
 	
-	/** POST·¢ËÍ¹ıÀ´µÄÊı¾İ */
+	/** POSTå‘é€è¿‡æ¥çš„æ•°æ® */
 	private byte[] content = new byte[0];
 	
-	/** Æô¶¯ĞÂÏß³ÌÒì²½´¦Àí */
+	/** å¯åŠ¨æ–°çº¿ç¨‹å¼‚æ­¥å¤„ç† */
 	public static void process(Socket socket) {
 		Thread thread = new ClientProcessor(socket);
-		thread.setName("´¦ÀíÏß³Ìid=" + thread.getId());
+		thread.setName("å¤„ç†çº¿ç¨‹id=" + thread.getId());
 		thread.start();
 	}
 
-	/** Á¬½ÓµÄ¿Í»§¶Ë */
+	/** è¿æ¥çš„å®¢æˆ·ç«¯ */
 	private Socket socket;
 
 	/**
-	 * ¹¹Ôì·½·¨
+	 * æ„é€ æ–¹æ³•
 	 * @param skt
 	 */
 	public ClientProcessor(Socket skt){
@@ -66,29 +66,29 @@ public class ClientProcessor extends Thread {
 		//addContextHandler(new ContextHandler("/url_2"));
 	}
 	
-	/** Ìí¼ÓÉÏÏÂÎÄ´¦ÀíÆ÷ */
+	/** æ·»åŠ ä¸Šä¸‹æ–‡å¤„ç†å™¨ */
 	public void addContextHandler(ContextHandler ctx){
 		contextHandlerMap.put(ctx.getContext(), ctx);
 	}
 	
 	/**
-	 * Ö´ĞĞ´¦Àí
+	 * æ‰§è¡Œå¤„ç†
 	 */
 	public void run() {
-		logger.info("¿ªÊ¼´¦ÀíÀ´×Ô[" + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "]¿Í»§¶ËÇëÇó.");
+		logger.info("å¼€å§‹å¤„ç†æ¥è‡ª[" + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "]å®¢æˆ·ç«¯è¯·æ±‚.");
 		try {
 			socket.setTcpNoDelay(true);
-			socket.setSoTimeout(1 * 60 * 1000);// ÉèÖÃ¶ÁÈ¡³¬Ê±£º1·ÖÖÓ
+			socket.setSoTimeout(1 * 60 * 1000);// è®¾ç½®è¯»å–è¶…æ—¶ï¼š1åˆ†é’Ÿ
 			
-			// ½ÓÊÜÇëÇó
+			// æ¥å—è¯·æ±‚
 			request(socket.getInputStream());
 			
-			// ·µ»ØÏìÓ¦
+			// è¿”å›å“åº”
 			response(socket.getOutputStream());
 			
-			logger.info("À´×Ô[" + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "]µÄÇëÇóÒÑÏìÓ¦["+statusCode+"].");
+			logger.info("æ¥è‡ª[" + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "]çš„è¯·æ±‚å·²å“åº”["+statusCode+"].");
 		} catch (Exception e) {
-			logger.error("´¦ÀíÀ´×Ô[" + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "]µÄ¿Í»§¶Ësocket³ö´í.", e);
+			logger.warning("å¤„ç†æ¥è‡ª[" + socket.getInetAddress().getHostAddress() + ":" + socket.getPort() + "]çš„å®¢æˆ·ç«¯socketå‡ºé”™.");
 		} finally {
 			try {
 				socket.close();
@@ -99,23 +99,23 @@ public class ClientProcessor extends Thread {
 
 	private void request(InputStream input) {
 		try {
-			// ¶ÁÈ¡¡¾ÆğÊ¼ĞĞ¡¿£¬Ò²¾ÍHTTP¿ªÊ¼µÄµÚÒ»ĞĞ
+			// è¯»å–ã€èµ·å§‹è¡Œã€‘ï¼Œä¹Ÿå°±HTTPå¼€å§‹çš„ç¬¬ä¸€è¡Œ
 			String startLine = readHeadLine(input);
 			StartLine sl = StartLine.parse(startLine);
 			this.uri = sl.getUri();
 			this.method = sl.getMethod();
 			
-			// ¶ÁÈ¡ÍêËùÓĞµÄheader
+			// è¯»å–å®Œæ‰€æœ‰çš„header
 			readAllHeaders(input);
 			
-			// Èç¹ûÊÇGETÇëÇó£¬ÔòÖ±½Ó½áÊø
+			// å¦‚æœæ˜¯GETè¯·æ±‚ï¼Œåˆ™ç›´æ¥ç»“æŸ
 			if("GET".equals(method)){
 				return;
 			}
-			// Èç¹ûÊÇPOSTÇëÇó£¬Ôò¶ÁÈ¡POSTÊı¾İ£¬Í¬Ê±ÒªÇóÇëÇó±¨Í·°üº¬Content-Length
+			// å¦‚æœæ˜¯POSTè¯·æ±‚ï¼Œåˆ™è¯»å–POSTæ•°æ®ï¼ŒåŒæ—¶è¦æ±‚è¯·æ±‚æŠ¥å¤´åŒ…å«Content-Length
 			if("POST".equals(sl.getMethod())){
 				if(!headers.containsKey("Content-Length")){
-					statusCode = 400;	// POSTÈ±ÉÙÏà¹ØÍ·²¿ 
+					statusCode = 400;	// POSTç¼ºå°‘ç›¸å…³å¤´éƒ¨ 
 					return;
 				}
 				int length = Integer.parseInt(headers.get("Content-Length"));
@@ -127,68 +127,68 @@ public class ClientProcessor extends Thread {
 					int bt = input.read();
 					if(bt == -1)break;
 					mem.write(bt);
-					// ×î¶àÖ»¶ÁÈ¡Content-LengthµÄ³¤¶È
+					// æœ€å¤šåªè¯»å–Content-Lengthçš„é•¿åº¦
 					if(mem.size()==length){
 						break;
 					}
 				}
-				// Èç¹ûPOSTµÄÊı¾İ²»·ûºÏ
+				// å¦‚æœPOSTçš„æ•°æ®ä¸ç¬¦åˆ
 				if(mem.size()<length){
 					statusCode = 400;
 					return;
 				}
-				// POSTµÄÄÚÈİ
+				// POSTçš„å†…å®¹
 				content = mem.toByteArray();
 				return;
 			}
-			statusCode = 405;	// GETºÍPOSÖ®ÍâµÄÇëÇóÔİ²»´¦Àí
+			statusCode = 405;	// GETå’ŒPOSä¹‹å¤–çš„è¯·æ±‚æš‚ä¸å¤„ç†
 		} catch (HttpProtocolException e) {
-			statusCode = 400;	// HTTPĞ­ÒéÓïÒâ´íÎó
-			logger.error("", e);
+			statusCode = 400;	// HTTPåè®®è¯­æ„é”™è¯¯
+			logger.warning(e.getMessage());
 		} catch (IOException e) {
-			statusCode = 500;	// ·şÎñÆ÷ÄÚ²¿´íÎó
-			logger.error("", e);
+			statusCode = 500;	// æœåŠ¡å™¨å†…éƒ¨é”™è¯¯
+			logger.warning(e.getMessage());
 		} catch (Exception e) {
-			statusCode = 500;	// ·şÎñÆ÷ÄÚ²¿´íÎó
-			logger.error("", e);
+			statusCode = 500;	// æœåŠ¡å™¨å†…éƒ¨é”™è¯¯
+			logger.warning(e.getMessage());
 		}
 	}
 	
-	/** ´ÓÊäÈëÁ÷ÖĞ¶ÁÈ¡Í·²¿ĞĞ */
+	/** ä»è¾“å…¥æµä¸­è¯»å–å¤´éƒ¨è¡Œ */
 	private String readHeadLine(InputStream is) throws IOException, HttpProtocolException {
-		StringBuilder buff = new StringBuilder(256);		// Í¨³£HTTPĞ­ÒéÇëÇóÃ¿ĞĞ200¸ö×Ö·ûÄÚ
+		StringBuilder buff = new StringBuilder(256);		// é€šå¸¸HTTPåè®®è¯·æ±‚æ¯è¡Œ200ä¸ªå­—ç¬¦å†…
 		while(true){
 			int bt = is.read();
 			if(bt == -1)break;
 			buff.append((char)bt);
-			// Êı¾İ³¤¶È¼ì²é£ºÔÚÇëÇóµÄhttp headerĞĞÄÚĞèÒªÏŞÖÆÃ¿ĞĞµÄ×î´ó³¤¶È£¬Ô¤·À·Ç·¨ÇëÇó
+			// æ•°æ®é•¿åº¦æ£€æŸ¥ï¼šåœ¨è¯·æ±‚çš„http headerè¡Œå†…éœ€è¦é™åˆ¶æ¯è¡Œçš„æœ€å¤§é•¿åº¦ï¼Œé¢„é˜²éæ³•è¯·æ±‚
 			if(buff.length()>HEADLINE_MAX){
-				logger.error("ÇëÇóÍ·²¿µ¥ĞĞÊı¾İ³¬¹ıÉè¶¨×î´óÖµ£º" + buff.toString());
+				logger.warning("è¯·æ±‚å¤´éƒ¨å•è¡Œæ•°æ®è¶…è¿‡è®¾å®šæœ€å¤§å€¼ï¼š" + buff.toString());
 				throw headExcpt;
 			}
-			// ÅĞ¶ÏÊÇ·ñ³öÏÖ[CRLF]»»ĞĞ£ºÑÏ¸ñÑéÖ¤±ØĞèÍ¬Ê±³öÏÖ
+			// åˆ¤æ–­æ˜¯å¦å‡ºç°[CRLF]æ¢è¡Œï¼šä¸¥æ ¼éªŒè¯å¿…éœ€åŒæ—¶å‡ºç°
 			if(buff.charAt(buff.length()-1)=='\n' && buff.length()>=2 && buff.charAt(buff.length()-2)=='\r'){
-				// ¶ÁÈ¡µ½CRLF£¬ÔòÒ»ĞĞ½áÊø
+				// è¯»å–åˆ°CRLFï¼Œåˆ™ä¸€è¡Œç»“æŸ
 				break;
 			}
 		}
-		// É¾³ıCRLF
+		// åˆ é™¤CRLF
 		buff.setLength(buff.length()-2);
-		// ·µ»Ø²»´ø»»ĞĞµÄ×Ö·û
+		// è¿”å›ä¸å¸¦æ¢è¡Œçš„å­—ç¬¦
 		return buff.toString();
 	}
 	
-	/** ¶ÁÈ¡ËùÓĞHTTP±¨Í· */
+	/** è¯»å–æ‰€æœ‰HTTPæŠ¥å¤´ */
 	private void readAllHeaders(InputStream is) throws IOException, HttpProtocolException {
 		int count = HEADCOUNT_MAX;
 		while(count>0){
 			String line = readHeadLine(is);
 			if(line.isEmpty()){
-				break;	// ¿ÕĞĞËµÃ÷Í·²¿½áÊøÁË
+				break;	// ç©ºè¡Œè¯´æ˜å¤´éƒ¨ç»“æŸäº†
 			}
-			int splitIndex = line.indexOf(": ");		// ÑÏ¸ñ°´ÕÕÒ»¸öÃ°ºÅ¡¢Ò»¸ö¿Õ¸ñ
+			int splitIndex = line.indexOf(": ");		// ä¸¥æ ¼æŒ‰ç…§ä¸€ä¸ªå†’å·ã€ä¸€ä¸ªç©ºæ ¼
 			if(splitIndex == -1){
-				logger.error("²»·ûºÏHTTPĞ­ÒéµÄÍ·²¿£º" + line);
+				logger.warning("ä¸ç¬¦åˆHTTPåè®®çš„å¤´éƒ¨ï¼š" + line);
 				throw headExcpt;
 			}
 			headers.put(line.substring(0, splitIndex), line.substring(splitIndex+2));
@@ -201,7 +201,7 @@ public class ClientProcessor extends Thread {
 			notFoundRequest(output);
 			return;
 		}
-		// Ñ°ÕÒ¶ÔÓ¦µÄÉÏÏÂÎÄ´¦ÀíÆ÷
+		// å¯»æ‰¾å¯¹åº”çš„ä¸Šä¸‹æ–‡å¤„ç†å™¨
 		ContextHandler contextHandler = contextHandlerMap.get(uri);
 		if(contextHandler == null){
 			notFoundRequest(output);
@@ -209,7 +209,7 @@ public class ClientProcessor extends Thread {
 		}
 		
 		byte[] result;
-		// ½ö½öÖ§³ÖGETÓëPOST
+		// ä»…ä»…æ”¯æŒGETä¸POST
 		if("GET".equals(method)){
 			result = contextHandler.doGet();
 		}else if("POST".equals(method)){
@@ -226,15 +226,15 @@ public class ClientProcessor extends Thread {
 		buff.append("Connection: close").append(CRLF);
 		buff.append("Content-Length: ").append(result.length).append(CRLF);
 		buff.append(CRLF);
-		// Êä³öhead£ºheadÖ»ÄÜÊÇÓ¢ÎÄ×ÖÄ¸£¬¶Ô×Ö·û¼¯ÎŞÌØ±ğÒªÇó
+		// è¾“å‡ºheadï¼šheadåªèƒ½æ˜¯è‹±æ–‡å­—æ¯ï¼Œå¯¹å­—ç¬¦é›†æ— ç‰¹åˆ«è¦æ±‚
 		output.write(buff.toString().getBytes(CHARSET));
 		output.flush();
-		// Êä³öÄÚÈİ
+		// è¾“å‡ºå†…å®¹
 		output.write(result);
 		output.flush();
 	}
 	
-	/** ²»Ö§³ÖµÄÇëÇóµÄÏìÓ¦:404 Not Found */
+	/** ä¸æ”¯æŒçš„è¯·æ±‚çš„å“åº”:404 Not Found */
 	private void notFoundRequest(OutputStream os) throws IOException{
 		String notice = "404 Not Found";
 		StringBuilder buff = new StringBuilder();

@@ -4,29 +4,29 @@ package game.snake;
 public class AI {
 	
 
-	/** Ë¼¿¼ */
+	/** æ€è€ƒ */
 	public void think(Snake snake, Block fruit, int rows, int cols) {
 		int fruitRow = fruit.getRowIndex();
 		int fruitCol = fruit.getColIndex();
 		switch (snake.direction) {
-		case '¡ü':
-		case '¡ı':
+		case 'â†‘':
+		case 'â†“':
 			if(snake.row==fruitRow){
-				// ´¹Ö±ÒÆ¶¯Ê±£¬Ë®Æ½·½ÏòÓëË®¹ûÏàÍ¬ĞèÒª×óÓÒ×ªÍä
+				// å‚ç›´ç§»åŠ¨æ—¶ï¼Œæ°´å¹³æ–¹å‘ä¸æ°´æœç›¸åŒéœ€è¦å·¦å³è½¬å¼¯
 				if(snake.col>fruitCol){
 					snake.turnLeft();
 				}else{
 					snake.turnRight();
 				}
-			}else if(snake.direction=='¡ü' && snake.row<fruitRow){
-				// Èç¹ûÉßÍ·ÔÚÏòÉÏ×ß£¬²¢ÇÒÉßÍ·ÔÚË®¹ûµÄÉÏ·½
+			}else if(snake.direction=='â†‘' && snake.row<fruitRow){
+				// å¦‚æœè›‡å¤´åœ¨å‘ä¸Šèµ°ï¼Œå¹¶ä¸”è›‡å¤´åœ¨æ°´æœçš„ä¸Šæ–¹
 				if(snake.col>fruitCol){
 					snake.turnLeft();
 				}else{
 					snake.turnRight();
 				}
-			}else if(snake.direction=='¡ı' && snake.row>fruitRow){
-				// Èç¹ûÉßÍ·ÔÚÏòÏÂ×ß£¬²¢ÇÒÉßÍ·ÔÚË®¹ûµÄÏÂ·½
+			}else if(snake.direction=='â†“' && snake.row>fruitRow){
+				// å¦‚æœè›‡å¤´åœ¨å‘ä¸‹èµ°ï¼Œå¹¶ä¸”è›‡å¤´åœ¨æ°´æœçš„ä¸‹æ–¹
 				if(snake.col>fruitCol){
 					snake.turnLeft();
 				}else{
@@ -34,24 +34,24 @@ public class AI {
 				}
 			}
 			break;
-		case '¡û':
-		case '¡ú':
+		case 'â†':
+		case 'â†’':
 			if(snake.col==fruitCol){
-				// Ë®Æ½ÒÆ¶¯Ê±£¬µ±´¹Ö±·½ÏòÓëË®¹ûÏàÍ¬ĞèÒªÉÏÏÂ×ªÍä
+				// æ°´å¹³ç§»åŠ¨æ—¶ï¼Œå½“å‚ç›´æ–¹å‘ä¸æ°´æœç›¸åŒéœ€è¦ä¸Šä¸‹è½¬å¼¯
 				if(snake.row>fruitRow){
 					snake.turnUp();
 				}else{
 					snake.turnDown();
 				}
-			} else if(snake.direction=='¡û' && snake.col<fruitCol){
-				// Èç¹ûÉßÍ·ÔÚÏò×ó×ß£¬²¢ÇÒÉßÍ·ÔÚË®¹ûµÄ×ó±ß
+			} else if(snake.direction=='â†' && snake.col<fruitCol){
+				// å¦‚æœè›‡å¤´åœ¨å‘å·¦èµ°ï¼Œå¹¶ä¸”è›‡å¤´åœ¨æ°´æœçš„å·¦è¾¹
 				if(snake.row>fruitRow){
 					snake.turnUp();
 				}else{
 					snake.turnDown();
 				}
-			}else if(snake.direction=='¡ú' && snake.col>fruitCol){
-				// Èç¹ûÉßÍ·ÔÚÏòÓÒ×ß£¬²¢ÇÒÉßÍ·ÔÚË®¹ûµÄÓÒ±ß
+			}else if(snake.direction=='â†’' && snake.col>fruitCol){
+				// å¦‚æœè›‡å¤´åœ¨å‘å³èµ°ï¼Œå¹¶ä¸”è›‡å¤´åœ¨æ°´æœçš„å³è¾¹
 				if(snake.row>fruitRow){
 					snake.turnUp();
 				}else{
@@ -60,14 +60,14 @@ public class AI {
 			}
 			break;			
 		}
-		// Éß×ªÍêÍäºó£¬¼ì²é¼¸²½Ö®ºó»á²»»á×²µ½×ÔÉí
+		// è›‡è½¬å®Œå¼¯åï¼Œæ£€æŸ¥å‡ æ­¥ä¹‹åä¼šä¸ä¼šæ’åˆ°è‡ªèº«
 		checkInStep(step, snake, rows, cols);
 	}
 
 	public static int step = 20;
 	
 	/***
-	 * step²½ºó£¬»á²»»á×²µ½×ÔÉí
+	 * stepæ­¥åï¼Œä¼šä¸ä¼šæ’åˆ°è‡ªèº«
 	 * @param step
 	 */
 	public void checkInStep(int step, Snake snake, int rows, int cols){
@@ -86,8 +86,8 @@ public class AI {
 	/**
 	 * 
 	 * @param snake
-	 * @param offerRow Ö»ÄÜÈ¡Öµ£º0»ò+1»ò-1
-	 * @param offerCol Ö»ÄÜÈ¡Öµ£º0»ò+1»ò-1
+	 * @param offerRow åªèƒ½å–å€¼ï¼š0æˆ–+1æˆ–-1
+	 * @param offerCol åªèƒ½å–å€¼ï¼š0æˆ–+1æˆ–-1
 	 * @return
 	 */
 	public BB checkBoom(Snake snake, int offerRow, int offerCol){

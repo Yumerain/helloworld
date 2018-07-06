@@ -12,40 +12,40 @@ public class Snake {
 	
 	private AI ai = new AI();
 	
-	// ÓÎÏ·¸ñ×ÓµÄĞĞÊı
+	// æ¸¸æˆæ ¼å­çš„è¡Œæ•°
 	private int rows;
-	// ÓÎÏ·¸ñ×ÓµÄÁĞÊı
+	// æ¸¸æˆæ ¼å­çš„åˆ—æ•°
 	private int cols;
 
-	// ÉßµÄÉíÌå
+	// è›‡çš„èº«ä½“
 	public List<Block> body = new ArrayList<Block>();
 	
-	// ÉßÇ°½øµÄ·½Ïò£º¡û ¡ü ¡ú ¡ı 
-	public char direction = '¡ı';
-	// ÏÂÒ»¸öÒªÇ°½øµÄ·½Ïò
-	public char nextDirection = '¡ı';
+	// è›‡å‰è¿›çš„æ–¹å‘ï¼šâ† â†‘ â†’ â†“ 
+	public char direction = 'â†“';
+	// ä¸‹ä¸€ä¸ªè¦å‰è¿›çš„æ–¹å‘
+	public char nextDirection = 'â†“';
 	
-	// ÉßÍ·µÄĞĞÎ»ÖÃ
+	// è›‡å¤´çš„è¡Œä½ç½®
 	public int row;
 	
-	// ÉßÍ·µÄÁĞÎ»ÖÃ
+	// è›‡å¤´çš„åˆ—ä½ç½®
 	public int col;
 	
 	public Snake(int rs, int cs){
-		// ÓÎÏ·¸ñ×Ó´óĞ¡
+		// æ¸¸æˆæ ¼å­å¤§å°
 		this.rows = rs;
 		this.cols = cs;
 		init();
 	}
 	
 	public void init() {
-		// ÉßÇ°½øµÄ·½Ïò£º¡û ¡ü ¡ú ¡ı 
-		this.direction = '¡û';
-		this.nextDirection = '¡û';
-		// ÉßÍ·ÆğÊ¼Î»ÖÃ
+		// è›‡å‰è¿›çš„æ–¹å‘ï¼šâ† â†‘ â†’ â†“ 
+		this.direction = 'â†';
+		this.nextDirection = 'â†';
+		// è›‡å¤´èµ·å§‹ä½ç½®
 		this.row = START_ROW;
 		this.col = START_COL;	
-		// ÊµÀı»¯³öÉßµÄ4¸ö³õÊ¼¹Ø½Ú
+		// å®ä¾‹åŒ–å‡ºè›‡çš„4ä¸ªåˆå§‹å…³èŠ‚
 		Block header = new Block(Game.UNIT, Color.black, START_ROW, START_COL);
 		Block b1 = new Block(Game.UNIT, Color.gray, START_ROW, START_COL+1);
 		Block b2 = new Block(Game.UNIT, Color.gray, START_ROW, START_COL+2);
@@ -57,7 +57,7 @@ public class Snake {
 		body.add(b3);
 	}
 	
-	// »­³öÉßµÄÉíÌå
+	// ç”»å‡ºè›‡çš„èº«ä½“
 	public void draw(Graphics g){
 		for(int i=0; i<body.size(); i++){
 			Block block = body.get(i);
@@ -67,78 +67,78 @@ public class Snake {
 	}
 	
 	/**
-	 * AI£¬×ÔÖ÷ÒÆ¶¯
+	 * AIï¼Œè‡ªä¸»ç§»åŠ¨
 	 */
 	public int autoMove(Block fruit){
-		// ÖÇÄÜÅĞ¶ÏÒ»¸öÏÂ·½Ïò
+		// æ™ºèƒ½åˆ¤æ–­ä¸€ä¸ªä¸‹æ–¹å‘
 		ai.think(this, fruit, rows, cols);
 		return move(fruit);
 	}
 	
 	/**
-	 * Ì°Ê³ÉßµÄÒÆ¶¯·½·¨
+	 * è´ªé£Ÿè›‡çš„ç§»åŠ¨æ–¹æ³•
 	 * @param fruit
-	 * @return 1-³Ôµ½Ë®¹û£»2-ÆÕÍ¨ÒÆ¶¯
+	 * @return 1-åƒåˆ°æ°´æœï¼›2-æ™®é€šç§»åŠ¨
 	 */
 	public int move(Block fruit){
-		// ¸ú¾İÉßµÄÇ°½ø·½Ïò£¬ÅĞ¶Ï³öÉßÍ·µÄÏÂÒ»¸öĞÂÎ»ÖÃ
+		// è·Ÿæ®è›‡çš„å‰è¿›æ–¹å‘ï¼Œåˆ¤æ–­å‡ºè›‡å¤´çš„ä¸‹ä¸€ä¸ªæ–°ä½ç½®
 		switch (nextDirection) {
-		case '¡û':
+		case 'â†':
 			this.col--;
 			break;
-		case '¡ü':
+		case 'â†‘':
 			this.row--;
 			break;
-		case '¡ú':
+		case 'â†’':
 			this.col++;
 			break;
-		case '¡ı':
+		case 'â†“':
 			this.row++;
 			break;
 		}
 		direction = nextDirection;
-		// ²Ù×÷Éß±¾ÉíµÄ±ä»¯
-		// ´´ĞÂµÄÉßÍ·
+		// æ“ä½œè›‡æœ¬èº«çš„å˜åŒ–
+		// åˆ›æ–°çš„è›‡å¤´
 		Block newHeader = new Block(Game.UNIT, Color.black, row, col);
-		// °Ñ¾ÉµÄÉßÍ·µÄÑÕÉ«¸Ä³ÉÉíÌåµÄÑÕÉ«
+		// æŠŠæ—§çš„è›‡å¤´çš„é¢œè‰²æ”¹æˆèº«ä½“çš„é¢œè‰²
 		body.get(0).setColor(Color.gray);		
-		// Éß³¤³¤Ò»½Ú£ºÔÚÉßÍ·Ç°·½£¬¸ú¾İÉßµÄÇ°½ø·½Ïò²åÈëÒ»¸öĞÂµÄÉßÍ·
+		// è›‡é•¿é•¿ä¸€èŠ‚ï¼šåœ¨è›‡å¤´å‰æ–¹ï¼Œè·Ÿæ®è›‡çš„å‰è¿›æ–¹å‘æ’å…¥ä¸€ä¸ªæ–°çš„è›‡å¤´
 		body.add(0, newHeader);
 		
-		// ¢ÙÈç¹ûĞÂµÄÉßÍ·Î»ÖÃÓëË®¹ûÏàÍ¬£¬ÔòÉß³Ôµ½ÁËË®¹û£¬³¤³¤Ò»½Ú
+		// â‘ å¦‚æœæ–°çš„è›‡å¤´ä½ç½®ä¸æ°´æœç›¸åŒï¼Œåˆ™è›‡åƒåˆ°äº†æ°´æœï¼Œé•¿é•¿ä¸€èŠ‚
 		if(col == fruit.getColIndex() && row == fruit.getRowIndex()){
-			// ³Ôµ½Ë®¹û£¬Ö±½Ó·µ»Ø£¬²»ÓÃÒÆ³ıÉßÎ²
+			// åƒåˆ°æ°´æœï¼Œç›´æ¥è¿”å›ï¼Œä¸ç”¨ç§»é™¤è›‡å°¾
 			return 1;
 		}		
-		// ĞÂÔöÁËÒ»¸öÉßÍ·ºó£¬ÒÆ³ıÉßÎ²£¬±íÊ¾ÉßÇ°½øÁËÒ»¸ñ
+		// æ–°å¢äº†ä¸€ä¸ªè›‡å¤´åï¼Œç§»é™¤è›‡å°¾ï¼Œè¡¨ç¤ºè›‡å‰è¿›äº†ä¸€æ ¼
 		body.remove(body.size() - 1);
 		
-		// ¢ÚÉßÇ°½øºóÅĞ¶¨ÉßÊÇ·ñ×²Ç½
-		// ÅĞ¶¨ÉßÊÇ·ñ×²Ç½£¬×²µ½¾ÍËÀÁË
+		// â‘¡è›‡å‰è¿›ååˆ¤å®šè›‡æ˜¯å¦æ’å¢™
+		// åˆ¤å®šè›‡æ˜¯å¦æ’å¢™ï¼Œæ’åˆ°å°±æ­»äº†
 		if(col>=cols || row>=rows || col<0 || row <0) return -1;
-		// ÅĞ¶¨ÉßÊÇ·ñ×²µ½×Ô¼ºµÄÉíÌå£¬×²µ½¾ÍËÀÁË
+		// åˆ¤å®šè›‡æ˜¯å¦æ’åˆ°è‡ªå·±çš„èº«ä½“ï¼Œæ’åˆ°å°±æ­»äº†
 		for (int i = 1; i < body.size(); i++) {
 			Block item = body.get(i);
-			// ±éÀúÉßÉíÌåµÄÃ¿Ò»½ÚÓëÉßÍ·µÄÎ»ÖÃÏà±È½Ï£¬Èç¹ûÎ»ÖÃÖØ¸´£¬Ôò×²µ½×Ô¼ºÉíÌåÁË
+			// éå†è›‡èº«ä½“çš„æ¯ä¸€èŠ‚ä¸è›‡å¤´çš„ä½ç½®ç›¸æ¯”è¾ƒï¼Œå¦‚æœä½ç½®é‡å¤ï¼Œåˆ™æ’åˆ°è‡ªå·±èº«ä½“äº†
 			if(col==item.getColIndex() && row==item.getRowIndex()){
 				return -1;
 			}
 		}
 		
-		// ¢ÛÃ»×²ËÀ£¬ÆÕÍ¨ÒÆ¶¯
+		// â‘¢æ²¡æ’æ­»ï¼Œæ™®é€šç§»åŠ¨
 		return 0;		
 	}
 	
 	/**
-	 * ¼ì²éË®¹ûÎ»ÖÃÊÇ·ñÓë×Ô¼ºµÄÉíÌåÖØ¸´
+	 * æ£€æŸ¥æ°´æœä½ç½®æ˜¯å¦ä¸è‡ªå·±çš„èº«ä½“é‡å¤
 	 * @param r
 	 * @param c
-	 * @return ÖØ¸´·µ»Øtrue, ·ñÔò·µ»Øfalse
+	 * @return é‡å¤è¿”å›true, å¦åˆ™è¿”å›false
 	 */
 	public boolean check(int r, int c){
 		for (int i = 0; i < body.size(); i++) {
 			Block item = body.get(i);
-			// ±éÀúÉßÉíÌåµÄÃ¿Ò»½ÚÓëÉßÍ·µÄÎ»ÖÃÏà±È½Ï£¬Èç¹ûÎ»ÖÃÖØ¸´£¬Ôò×²µ½×Ô¼ºÉíÌåÁË
+			// éå†è›‡èº«ä½“çš„æ¯ä¸€èŠ‚ä¸è›‡å¤´çš„ä½ç½®ç›¸æ¯”è¾ƒï¼Œå¦‚æœä½ç½®é‡å¤ï¼Œåˆ™æ’åˆ°è‡ªå·±èº«ä½“äº†
 			//System.out.println("r=" + r + ",sr=" +item.getColIndex() + ",c=" + c + ",sc=" + item.getRowIndex());
 			if(c==item.getColIndex() && r==item.getRowIndex()){
 				return true;
@@ -147,19 +147,19 @@ public class Snake {
 		return false;
 	}
 	
-	// Ì°Ê³Éß×ªÍä
-	public void turnLeft(){if(direction!='¡ú')nextDirection='¡û';}
-	public void turnUp(){if(direction!='¡ı')nextDirection='¡ü';}
-	public void turnRight(){if(direction!='¡û')nextDirection='¡ú';}
-	public void turnDown(){if(direction!='¡ü')nextDirection='¡ı';}
+	// è´ªé£Ÿè›‡è½¬å¼¯
+	public void turnLeft(){if(direction!='â†’')nextDirection='â†';}
+	public void turnUp(){if(direction!='â†“')nextDirection='â†‘';}
+	public void turnRight(){if(direction!='â†')nextDirection='â†’';}
+	public void turnDown(){if(direction!='â†‘')nextDirection='â†“';}
 	
-	// ±£³ÖÔ­À´Â·Ïß
+	// ä¿æŒåŸæ¥è·¯çº¿
 	public void keepDierection(){
 		nextDirection = direction;
 	}
 	
 	/**
-	 * ¼ì²éÖ¸¶¨·½Ïòstep²½ÄÚ£¬¶àÉÙ²½»á×²ÉÏ£¬-1±íÊ¾²»»á×²ÉÏ
+	 * æ£€æŸ¥æŒ‡å®šæ–¹å‘stepæ­¥å†…ï¼Œå¤šå°‘æ­¥ä¼šæ’ä¸Šï¼Œ-1è¡¨ç¤ºä¸ä¼šæ’ä¸Š
 	 * @param step
 	 * @return
 	 */
@@ -169,22 +169,22 @@ public class Snake {
 		for (int i = 1; i <= step; i++) {
 			count++;
 			switch (dir) {
-			case '¡ü':
+			case 'â†‘':
 				if(check(row - i, col)==true){
 					boom = true;
 				}
 				break;
-			case '¡ı':
+			case 'â†“':
 				if(check(row + i, col)==true){
 					boom = true;
 				}
 				break;
-			case '¡û':
+			case 'â†':
 				if(check(row, col - i)==true){
 					boom = true;
 				}
 				break;
-			case '¡ú':
+			case 'â†’':
 				if(check(row, col + i)==true){
 					boom = true;
 				}

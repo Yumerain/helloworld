@@ -1,24 +1,16 @@
 package game.tank;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.security.MessageDigest;
-
-import org.apache.log4j.Logger;
 
 public class TankClient {
 	
 	public static void main(String[] args) {
 		
-		// ½ÓÊÜÊäÈë
+		// æ¥å—è¾“å…¥
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new InputStreamReader(System.in, "GBK"));
@@ -26,8 +18,8 @@ public class TankClient {
 			while(!"exit".equals(line=reader.readLine())){
 				System.out.println(line);
 			}
-			System.out.println("exit ¡­¡­");
-			// ¹Ø±Õ
+			System.out.println("exit â€¦â€¦");
+			// å…³é—­
 			//server.shutdown();
 		} catch (Exception e) {
 			e.printStackTrace();
