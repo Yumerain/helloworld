@@ -3,51 +3,51 @@ package game.chess;
 public class Chessboard {
 	
 	/**
-	 * @param map ÓÎÏ·µØ
-	 * @param a Íæ¼ÒÎ»ÖÃ
-	 * @param b Íæ¼ÒÎ»ÖÃ
+	 * @param map æ¸¸æˆåœ°
+	 * @param a ç©å®¶ä½ç½®
+	 * @param b ç©å®¶ä½ç½®
 	 */
 	public void printChessboard(String[] map, int a, int b){
 		
-		// ¸´ÖÆÒ»·İµØÍ¼µÄ¸±±¾
+		// å¤åˆ¶ä¸€ä»½åœ°å›¾çš„å‰¯æœ¬
 		String[] mapCopy = new String[map.length];
 		System.arraycopy(map, 0, mapCopy, 0, map.length);
 		
-		// °ÑµØÉÏÍæ¼ÒËùÔÚµÄÎ»ÖÃÓÃÍæ¼Ò´úºÅÌæ»»
-		mapCopy[a] = "£Á";
-		mapCopy[b] = "£Â";
-		if(a == b) mapCopy[b] = "££";
+		// æŠŠåœ°ä¸Šç©å®¶æ‰€åœ¨çš„ä½ç½®ç”¨ç©å®¶ä»£å·æ›¿æ¢
+		mapCopy[a] = "ï¼¡";
+		mapCopy[b] = "ï¼¢";
+		if(a == b) mapCopy[b] = "ï¼ƒ";
 		
-		// Êä³öµÚ1ĞĞ£º[¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ]
+		// è¾“å‡ºç¬¬1è¡Œï¼š[â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡]
 		for (int i = 0; i < 20; i++) {
 			System.out.print(mapCopy[i]);
 		}
 		System.out.println();
 		
-		// Êä³öµÚ2¡¢3¡¢4ĞĞ:[                   ¡õ]
+		// è¾“å‡ºç¬¬2ã€3ã€4è¡Œ:[                   â–¡]
 		for (int i = 0; i < 3; i++) {
 			for (int k = 0; k < 19; k++) {
-				System.out.print("¡¡");
+				System.out.print("ã€€");
 			}
 			System.out.println(mapCopy[20+i]);
 		}
 		
-		// Êä³öµÚ5ĞĞ£º[¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ]
+		// è¾“å‡ºç¬¬5è¡Œï¼š[â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡]
 		for (int i = 19; i >=0; i--) {
 			System.out.print(mapCopy[23+i]);	
 		}
 		System.out.println();
 		
-		// Êä³öµÚ6¡¢7¡¢8ĞĞ£º[¡õ                   ]
+		// è¾“å‡ºç¬¬6ã€7ã€8è¡Œï¼š[â–¡                   ]
 		for (int i = 0; i < 3; i++) {
 			System.out.print(mapCopy[43+i]);
 			for (int k = 0; k < 19; k++) {
-				System.out.print("¡¡");
+				System.out.print("ã€€");
 			}
 			System.out.println();
 		}
 		
-		// Êä³öµÚ9ĞĞ£º[¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ¡õ]
+		// è¾“å‡ºç¬¬9è¡Œï¼š[â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡â–¡]
 		for (int i = 0; i < 20; i++) {
 			System.out.print(mapCopy[46+i]);
 		}

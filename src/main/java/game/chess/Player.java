@@ -3,61 +3,61 @@ package game.chess;
 public class Player {
 	
 	public Player(String name){
-		// ¸øÍæ¼ÒÈ¡Ãû×Ö
+		// ç»™ç©å®¶å–åå­—
 		this.name = name;
-		// Íæ¼Ò³õÊ¼Î»ÖÃÎª0
+		// ç©å®¶åˆå§‹ä½ç½®ä¸º0
 		this.position = 0;
 	}
 	
-	// Íæ¼ÒµÄÎ»ÖÃ
+	// ç©å®¶çš„ä½ç½®
 	public int position;
-	// ±íÊ¾Íæ¼ÒÒÆ¶¯µÄÎ»ÖÃ
+	// è¡¨ç¤ºç©å®¶ç§»åŠ¨çš„ä½ç½®
 	public int step;
 
-	// Íæ¼ÒµÄÃû³Æ
+	// ç©å®¶çš„åç§°
 	public String name;
 	
-	// ±íÊ¾Íæ¼ÒÔâÓöµÄÊ±¼ä£º1-ÆÕÍ¨ÒÆ¶¯£¬2-²Èµ½µØÀ×£¬3-½±ÀøÒ»´ÎÖÀ÷»×Ó
+	// è¡¨ç¤ºç©å®¶é­é‡çš„æ—¶é—´ï¼š1-æ™®é€šç§»åŠ¨ï¼Œ2-è¸©åˆ°åœ°é›·ï¼Œ3-å¥–åŠ±ä¸€æ¬¡æ·éª°å­
 	public int event;
 	
-	// Íæ¼ÒÒÆ¶¯µÄ·½·¨
+	// ç©å®¶ç§»åŠ¨çš„æ–¹æ³•
 	public void move(int step, String[] map){
-		// ÒÆ¶¯ºóµÄÎ»ÖÃ
+		// ç§»åŠ¨åçš„ä½ç½®
 		int forward = position + step;
 		if(forward >= map.length) forward = map.length-1;
 		
-		if("¡ù".equals(map[forward])){
+		if("â€»".equals(map[forward])){
 			position = forward - 3;
-			if(position<0) position = 0; // ²»ÄÜÍËµ½ÆğµãÖ®ºó
+			if(position<0) position = 0; // ä¸èƒ½é€€åˆ°èµ·ç‚¹ä¹‹å
 			event = 2;
-		}else if("£Ò".equals(map[forward])){
+		}else if("ï¼²".equals(map[forward])){
 			position = forward;
 			event = 3;			
-		}else if("¡µ".equals(map[forward])){
+		}else if("ã€‰".equals(map[forward])){
 			position = forward + 5;
-			if(position>=map.length) position = map.length - 1; // ²»ÄÜ³¬³öµØÍ¼ÖÕµã
+			if(position>=map.length) position = map.length - 1; // ä¸èƒ½è¶…å‡ºåœ°å›¾ç»ˆç‚¹
 			event = 4;
 		}else{
 			position = forward;
 			event = 1;
 		}
-		// ¼ÇÂ¼Íæ¼ÒÒÆ¶¯µÄ²½Êı
+		// è®°å½•ç©å®¶ç§»åŠ¨çš„æ­¥æ•°
 		this.step = step;
 	}
 	
 	public void show(Player other){
 		switch (event) {
 		case 1:
-			System.out.print("Íæ¼Ò"+name+"Ç°½øÁË" + step + "²½£¬µ±Ç°Î»ÖÃ=" + position + ", Íæ¼Ò"+other.name+"Î»ÖÃ=" + other.position);
+			System.out.print("ç©å®¶"+name+"å‰è¿›äº†" + step + "æ­¥ï¼Œå½“å‰ä½ç½®=" + position + ", ç©å®¶"+other.name+"ä½ç½®=" + other.position);
 			break;
 		case 2:
-			System.out.print("Íæ¼Ò"+name+"ÏÈÇ°½øÁË" + step + "²½£¬ÓÖ²Èµ½µØÀ×ºóÍË3²½£¬µ±Ç°Î»ÖÃ=" + position + ", Íæ¼Ò"+other.name+"Î»ÖÃ=" + other.position);
+			System.out.print("ç©å®¶"+name+"å…ˆå‰è¿›äº†" + step + "æ­¥ï¼Œåˆè¸©åˆ°åœ°é›·åé€€3æ­¥ï¼Œå½“å‰ä½ç½®=" + position + ", ç©å®¶"+other.name+"ä½ç½®=" + other.position);
 			break;
 		case 3:
-			System.out.print("Íæ¼Ò"+name+"Ç°½øÁË" + step + "²½£¬Óöµ½½±ÀøÔÙÖÀ÷»×ÓÒ»´Î£¬µ±Ç°Î»ÖÃ=" + position + ", Íæ¼Ò"+other.name+"Î»ÖÃ=" + other.position);
+			System.out.print("ç©å®¶"+name+"å‰è¿›äº†" + step + "æ­¥ï¼Œé‡åˆ°å¥–åŠ±å†æ·éª°å­ä¸€æ¬¡ï¼Œå½“å‰ä½ç½®=" + position + ", ç©å®¶"+other.name+"ä½ç½®=" + other.position);
 			break;
 		case 4:
-			System.out.print("Íæ¼Ò"+name+"Ç°½øÁË" + step + "²½£¬Ò»·«·çË³Ç°½ø£µ²½£¬µ±Ç°Î»ÖÃ=" + position + ", Íæ¼Ò"+other.name+"Î»ÖÃ=" + other.position);
+			System.out.print("ç©å®¶"+name+"å‰è¿›äº†" + step + "æ­¥ï¼Œä¸€å¸†é£é¡ºå‰è¿›ï¼•æ­¥ï¼Œå½“å‰ä½ç½®=" + position + ", ç©å®¶"+other.name+"ä½ç½®=" + other.position);
 			break;	
 		}
 	}
