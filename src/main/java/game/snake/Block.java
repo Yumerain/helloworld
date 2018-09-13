@@ -2,7 +2,7 @@ package game.snake;
 
 import java.awt.Color;
 
-/** Ì°Ê³ÉßÉíÌåµÄµ¥Ôª£ºĞ¡½Ú¡¢Ğ¡¿é */
+/** è´ªé£Ÿè›‡èº«ä½“çš„å•å…ƒï¼šå°èŠ‚ã€å°å— */
 public class Block {
 	
 	public Block(int u, Color color, int r, int c){
@@ -11,13 +11,13 @@ public class Block {
 		this.rowIndex = r;
 		this.colIndex = c;
 	}
-	// µ¥Ôª´óĞ¡
+	// å•å…ƒå¤§å°
 	private int unit;
-	// µ¥ÔªÑÕÉ«
+	// å•å…ƒé¢œè‰²
 	private Color color;
-	// µ¥Ôª¸ñËùÔÚµÄĞĞ
+	// å•å…ƒæ ¼æ‰€åœ¨çš„è¡Œ
 	private int rowIndex;
-	// µ¥Ôª¸ñËùÔÚµÄÁĞ
+	// å•å…ƒæ ¼æ‰€åœ¨çš„åˆ—
 	private int colIndex;
 	
 	public void setUnit(int unit){

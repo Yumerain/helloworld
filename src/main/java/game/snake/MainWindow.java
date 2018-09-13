@@ -9,14 +9,14 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
-/** Ö÷´°¿Ú */
+/** ä¸»çª—å£ */
 public class MainWindow extends JFrame {
 	
 	private static final long serialVersionUID = 5077447958225132515L;
 
 	public static void main(String[] args) {
-		// ÉèÖÃ×ÖÌå
-		Font font = new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16);
+		// è®¾ç½®å­—ä½“
+		Font font = new Font("å¾®è½¯é›…é»‘", Font.BOLD, 16);
 		FontUIResource fur = new FontUIResource(font);
 		Enumeration<Object> keys = UIManager.getDefaults().keys();
 		while(keys.hasMoreElements()){
@@ -27,45 +27,44 @@ public class MainWindow extends JFrame {
 			}			
 		}
 		
-		// ÊµÀı»¯Ò»¸ö´°¿Ú
+		// å®ä¾‹åŒ–ä¸€ä¸ªçª—å£
 		MainWindow win = new MainWindow();
-		// ÉèÖÃ±êÌâ
-		win.setTitle("ÕâÊÇÒ»¸öjava´°¿Ú");
-		// ÉèÖÃ´°¿Ú´óĞ¡
+		// è®¾ç½®æ ‡é¢˜
+		win.setTitle("è¿™æ˜¯ä¸€ä¸ªjavaçª—å£");
+		// è®¾ç½®çª—å£å¤§å°
 		win.setSize(480,340);
-		// ¹Ø±Õ´°¿ÚÊ±£¬ÖÕÖ¹³ÌĞò
+		// å…³é—­çª—å£æ—¶ï¼Œç»ˆæ­¢ç¨‹åº
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		// ÓÎÏ·
+		// æ¸¸æˆ
 		Game game = new Game();
 		
-		// Ãæ°å
+		// é¢æ¿
 		Panel panel = new Panel(game);
 		win.add(panel);
-		// ÕıÖĞÏÔÊ¾
+		// æ­£ä¸­æ˜¾ç¤º
 		panel.setPreferredSize(new Dimension(game.getWidth(), game.getHeight()));
-		// ÊÊÅä´óĞ¡
+		// é€‚é…å¤§å°
 		win.pack();
 		
-		// È¡µÃÆÁÄ»´óĞ¡;
+		// å–å¾—å±å¹•å¤§å°;
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Dimension screenSize = tk.getScreenSize();
 		int width = (int)(screenSize.getWidth()-win.getWidth())/2;
 		int height = (int)(screenSize.getHeight()-win.getHeight())/2;
-		// ÉèÖÃ´°¿ÚÎ»ÖÃ ÓÚ ÆÁÄ»ÕıÖĞÑë
+		// è®¾ç½®çª—å£ä½ç½® äº å±å¹•æ­£ä¸­å¤®
 		win.setLocation(width,height);
-		// ÉèÖÃ´°¿Ú¿É¼û
+		// è®¾ç½®çª—å£å¯è§
 		win.setVisible(true);
 
 		
-		// ´°¿ÚÌí¼Ó¼ü¼àÌıÊÂ¼ş
+		// çª—å£æ·»åŠ é”®ç›‘å¬äº‹ä»¶
 		win.addKeyListener(game.createKeyListener());
-		// Æô¶¯Ãæ°åË¢ĞÂ
+		// å¯åŠ¨é¢æ¿åˆ·æ–°
 		panel.startUpdate();
 		
-		// Æô¶¯ÓÎÏ·Ë¢ĞÂ
-		game.start();
-		
+		// å¯åŠ¨æ¸¸æˆåˆ·æ–°
+		game.start();		
 		
 	}
 	

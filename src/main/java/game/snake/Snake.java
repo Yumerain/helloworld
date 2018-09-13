@@ -18,7 +18,7 @@ public class Snake {
 	private int cols;
 
 	// 蛇的身体
-	public List<Block> body = new ArrayList<Block>();
+	protected List<Block> body = new ArrayList<Block>();
 	
 	// 蛇前进的方向：← ↑ → ↓ 
 	public char direction = '↓';
@@ -70,7 +70,7 @@ public class Snake {
 	 * AI，自主移动
 	 */
 	public int autoMove(Block fruit){
-		// 智能判断一个下方向
+		// AI思考
 		ai.think(this, fruit, rows, cols);
 		return move(fruit);
 	}

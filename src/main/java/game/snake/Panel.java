@@ -11,13 +11,13 @@ public class Panel extends JPanel implements Runnable{
 
 	private Game game;
 	
-	//private Font font = new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16);
+	//private Font font = new Font("å¾®è½¯é›…é»‘", Font.BOLD, 16);
 	
 	public Panel(Game game){
 		this.game = game;
 	}
 	
-	// Æô¶¯Ãæ°åË¢ĞÂ
+	// å¯åŠ¨é¢æ¿åˆ·æ–°
 	public void startUpdate(){
 		new Thread(this).start();
 	}
@@ -25,19 +25,19 @@ public class Panel extends JPanel implements Runnable{
 	@Override
 	public void paint(Graphics g) {
 		//g.setFont(font);
-		// Êä³ö»­Ãæµ½»­°å
+		// è¾“å‡ºç”»é¢åˆ°ç”»æ¿
 		game.draw(g);
-		// »­±ß¿ò
+		// ç”»è¾¹æ¡†
 		g.setColor(Color.BLACK);
 		g.drawRect(0, 0, this.getWidth()-1, this.getHeight()-1);
 	}
 
 	public void run(){
 		while(true){
-			// Ë¢ĞÂ´°¿Ú
+			// åˆ·æ–°çª—å£
 			this.repaint();
 			try {
-				Thread.sleep(30);
+				Thread.sleep(10);
 			} catch (Exception e) {
 			}			
 		}

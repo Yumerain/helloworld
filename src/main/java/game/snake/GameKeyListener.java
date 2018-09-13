@@ -5,10 +5,10 @@ import java.awt.event.KeyListener;
 
 public class GameKeyListener implements KeyListener{
 
-	// Ì°Ê³ÉßµÄÒıÓÃ
+	// è´ªé£Ÿè›‡çš„å¼•ç”¨
 	private Snake snake;
 	
-	// ÓÎÏ·µÄÒıÓÃ
+	// æ¸¸æˆçš„å¼•ç”¨
 	private Game game;
 	
 	public GameKeyListener(Snake snake, Game game){
@@ -19,19 +19,19 @@ public class GameKeyListener implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case 37: // ×ó
+		case 37: // å·¦
 			snake.turnLeft();
 			break;
-		case 40: // ÏÂ
+		case 40: // ä¸‹
 			snake.turnDown();
 			break;
-		case 39: // ÓÒ
+		case 39: // å³
 			snake.turnRight();
 			break;
-		case 38: // ÉÏ
+		case 38: // ä¸Š
 			snake.turnUp();
 			break;
-		case 10: // ¼¤»î/ÔİÍ£
+		case 10: // æ¿€æ´»/æš‚åœ
 			game.toggleActive();
 			break;
 		}

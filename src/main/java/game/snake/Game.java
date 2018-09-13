@@ -10,37 +10,37 @@ public class Game extends Thread{
 		Color.yellow,Color.orange,Color.cyan
 	};
 	
-	// ÓÎÏ·¸ñ×ÓµÄĞĞÊı
+	// æ¸¸æˆæ ¼å­çš„è¡Œæ•°
 	private int rows = 20;
-	// ÓÎÏ·¸ñ×ÓµÄÁĞÊı
+	// æ¸¸æˆæ ¼å­çš„åˆ—æ•°
 	private int cols = 32;
-	// ÓÎÏ·×î¸ß·Ö
+	// æ¸¸æˆæœ€é«˜åˆ†
 	private int total;
-	// Í¨¹Ø·ÖÊı
+	// é€šå…³åˆ†æ•°
 	private int clearScore;
 	
-	// »­Ãæ¿í¶È
+	// ç”»é¢å®½åº¦
 	private int width;
-	// »­Ãæ¸ß¶È
+	// ç”»é¢é«˜åº¦
 	private int height;
 	
-	// Ì°Ê³Éß
+	// è´ªé£Ÿè›‡
 	private Snake snake;
 	
-	// Ë®¹û
+	// æ°´æœ
 	private Block fruit;
 	
-	// ±íÊ¾ÓÎÏ·ÊÇ·ñ½áÊø
+	// è¡¨ç¤ºæ¸¸æˆæ˜¯å¦ç»“æŸ
 	private boolean gameOver = false;
-	// ±íÊ¾ÓÎÏ·ÊÇ·ñÍ¨¹Ø
+	// è¡¨ç¤ºæ¸¸æˆæ˜¯å¦é€šå…³
 	private boolean clear = false;
-	// ±íÊ¾ÓÎÏ·ÊÇ½øĞĞ/ÔİÍ£
+	// è¡¨ç¤ºæ¸¸æˆæ˜¯è¿›è¡Œ/æš‚åœ
 	private boolean active = false;
 	
-	//	 ·ÖÊı
+	//	 åˆ†æ•°
 	private int score = 0;
 	
-	// µ¥Ôª´óĞ¡
+	// å•å…ƒå¤§å°
 	public static final int UNIT = 30;
 	
 	public Game(){
@@ -56,7 +56,7 @@ public class Game extends Thread{
 		clearScore = total;
 		if(clearScore > total) clearScore = total;
 		snake.init();
-		// ´´½¨Ò»¸öÎ»ÖÃËæ»úµÄË®¹û
+		// åˆ›å»ºä¸€ä¸ªä½ç½®éšæœºçš„æ°´æœ
 		fruit = createFruit();
 	}
 	
@@ -68,38 +68,38 @@ public class Game extends Thread{
 	}
 	
 
-	// Êä³ö»­Ãæ
+	// è¾“å‡ºç”»é¢
 	public void draw(Graphics g){
-		// Çå¿ÕÔ­ÓĞ»­Ãæ
+		// æ¸…ç©ºåŸæœ‰ç”»é¢
 		g.clearRect(0, 0, width, height);
 		
-		// »­³öË®¹û
+		// ç”»å‡ºæ°´æœ
 		g.setColor(fruit.getColor());
 		g.fillRect(fruit.getColIndex()*UNIT, fruit.getRowIndex()*UNIT, fruit.getUnit(), fruit.getUnit());
 		
-		// Êä³öÎÄ×Ö£ºÇë°´»Ø³µ¼ü¿ªÊ¼ÓÎÏ·
+		// è¾“å‡ºæ–‡å­—ï¼šè¯·æŒ‰å›è½¦é”®å¼€å§‹æ¸¸æˆ
 		
-		//g.drawString("Çë°´»Ø³µ¼ü¿ªÊ¼ÓÎÏ·", 60, 100);
+		//g.drawString("è¯·æŒ‰å›è½¦é”®å¼€å§‹æ¸¸æˆ", 60, 100);
 		
-		// »­³öÉßµÄÉíÌå
+		// ç”»å‡ºè›‡çš„èº«ä½“
 		snake.draw(g);
 		
-		// »­³öÓÎÏ··ÖÊı
+		// ç”»å‡ºæ¸¸æˆåˆ†æ•°
 		g.setColor(Color.blue);
-		g.drawString("·ÖÊı£º"+score, 10, 30);
+		g.drawString("åˆ†æ•°ï¼š"+score, 10, 30);
 		
-		// »­³öÎÄ×Ö£ºGame Over
+		// ç”»å‡ºæ–‡å­—ï¼šGame Over
 		g.setColor(Color.red);
 		if(gameOver){
-			g.drawString("Game Over£¬°´»Ø³µ¼üÖØĞÂ¿ªÊ¼", 300, 200);			
+			g.drawString("Game Overï¼ŒæŒ‰å›è½¦é”®é‡æ–°å¼€å§‹", 300, 200);			
 		}
-		// »­³öÎÄ×Ö£º¹§Ï²ÄãÍ¨¹Ø£¡
+		// ç”»å‡ºæ–‡å­—ï¼šæ­å–œä½ é€šå…³ï¼
 		g.setColor(Color.red);
 		if(clear){
-			g.drawString("¹§Ï²ÄãÍ¨¹Ø£¡", 300, 200);			
+			g.drawString("æ­å–œä½ é€šå…³ï¼", 300, 200);			
 		}
 		if(gameOver==false && active==false){
-			g.drawString("°´»Ø³µ¼ü¿ªÊ¼", 300, 200);
+			g.drawString("æŒ‰å›è½¦é”®å¼€å§‹", 300, 200);
 		}
 	}
 	
@@ -110,8 +110,8 @@ public class Game extends Thread{
 		}
 		while(true){
 			if(active == true && gameOver == false){
-				//int result = snake.move(fruit);	// ÆÕÍ¨ÒÆ¶¯
-				int result = snake.autoMove(fruit);		// ÖÇÄÜÒÆ¶¯
+				//int result = snake.move(fruit);	// æ™®é€šç§»åŠ¨
+				int result = snake.autoMove(fruit);		// æ™ºèƒ½ç§»åŠ¨
 				if(result == 1){
 					score += 100;
 					if(score >= clearScore){
@@ -130,11 +130,11 @@ public class Game extends Thread{
 		}
 	}
 	
-	// ´´½¨Ò»¸öÎ»ÖÃËæ»úµÄË®¹û
+	// åˆ›å»ºä¸€ä¸ªä½ç½®éšæœºçš„æ°´æœ
 	public Block createFruit(){
 		int r = rows;
 		int c = cols;
-		// ±£Ö¤ĞĞÎ»ÖÃÓëÁĞÎ»ÖÃÔÚÓÎÏ·µÄĞĞÁĞÖ®ÖĞ£¬²¢ÇÒ²»ÓëÉßµÄÉíÌåÖØ¸´
+		// ä¿è¯è¡Œä½ç½®ä¸åˆ—ä½ç½®åœ¨æ¸¸æˆçš„è¡Œåˆ—ä¹‹ä¸­ï¼Œå¹¶ä¸”ä¸ä¸è›‡çš„èº«ä½“é‡å¤
 		while(r >= rows || c >= cols || snake.check(r, c)){
 			r = (int)(Math.random()*10*rows);
 			c = (int)(Math.random()*10*cols);
@@ -147,7 +147,7 @@ public class Game extends Thread{
 		return block;
 	}
 	
-	// ´´½¨¼ü¼àÌıÊÂ¼şÊµÀı
+	// åˆ›å»ºé”®ç›‘å¬äº‹ä»¶å®ä¾‹
 	public GameKeyListener createKeyListener(){
 		return new GameKeyListener(snake, this);
 	}
