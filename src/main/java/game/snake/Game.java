@@ -91,7 +91,7 @@ public class Game extends Thread{
 		// 画出文字：Game Over
 		g.setColor(Color.red);
 		if(gameOver){
-			g.drawString("Game Over，按回车键重新开始", 300, 200);			
+			g.drawString("Game Over，按回车键重新开始", 40, 60);			
 		}
 		// 画出文字：恭喜你通关！
 		g.setColor(Color.red);
@@ -124,7 +124,7 @@ public class Game extends Thread{
 				}
 			}
 			try {
-				Thread.sleep(30);
+				Thread.sleep(100);
 			} catch (Exception e) {
 			}
 		}

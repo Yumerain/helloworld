@@ -1,7 +1,6 @@
 package game.snake;
 
-import java.awt.Point;
-import java.util.ArrayDeque;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -14,20 +13,21 @@ public class Way {
 	private int maxRow, maxCol;
 	private boolean find = false;
 	private boolean[][] mark;
-	private ArrayDeque<Point> steps;
+	private LinkedList<Character> steps;
 
 	public boolean isEmpty() {
-		return false;
+		return steps == null || steps.isEmpty();
 	}
 
 	public char next() {
-		return 0;
+		return steps.pollFirst();
 	}
 
 	public void search(List<Block> body, Block fruit, int rows, int cols) {
 		maxRow = rows;
 		maxCol = cols;
-		steps = new ArrayDeque<>(rows * cols);
+		find = false;
+		steps = new LinkedList<Character>();
 		mark = new boolean[rows][cols];
 		int[][] map = new int[rows][cols];
 		// 蛇身标记为障碍：1
@@ -40,7 +40,25 @@ public class Way {
 		
 		// 寻找从蛇头到水果之间的路径
 		// 如果没找到则向四个方向搜索
-		dfs(body.get(0).getRowIndex(), body.get(0).getColIndex(), map);
+		int row = body.get(0).getRowIndex();
+		int col = body.get(0).getColIndex();
+		if(!find) {
+			steps.add('↓');
+			dfs(row+1, col, map);
+		}
+		if(!find) {
+			steps.add('→');
+			dfs(row, col+1, map);
+		}
+		if(!find) {
+			steps.add('↑');
+			dfs(row-1, col, map);
+		}
+		if(!find) {
+			steps.add('←');
+			dfs(row, col-1, map);
+		}
+		System.out.println(steps);
 	}
 	
 	/**
@@ -52,8 +70,7 @@ public class Way {
 	public void dfs(int row, int col, int[][] map) {
 		// 越界判断、曾经访问过
 		if(row < 0 || col <0 || row > maxRow-1 || col > maxCol-1 || mark[row][col]) {
-			// 当前线路行不通，移出路径
-			//steps.removeLast();
+			steps.removeLast();
 			return;
 		}
 		// 标记已经访问
@@ -62,22 +79,33 @@ public class Way {
 		int entity = map[row][col];
 		//障碍
 		if(entity == 1) {
+			steps.removeLast();
 			return;
 		}
 		// 找到目标
 		if(entity == 2) {
-			//steps.addLast(new Point(row, col));
 			find = true;
 			return;
 		}
 		// 当前线路可以同行则加入路径
-		//steps.addLast(new Point(row, col));
 		// entity == 0
 		// 如果没找到则向四个方向搜索
-		if(!find)dfs(row+1, col, map);
-		if(!find)dfs(row, col+1, map);
-		if(!find)dfs(row-1, col, map);
-		if(!find)dfs(row, col-1, map);
+		if(!find) {
+			steps.add('↓');
+			dfs(row+1, col, map);
+		}
+		if(!find) {
+			steps.add('→');
+			dfs(row, col+1, map);
+		}
+		if(!find) {
+			steps.add('↑');
+			dfs(row-1, col, map);
+		}
+		if(!find) {
+			steps.add('←');
+			dfs(row, col-1, map);
+		}
 	}
 
 }

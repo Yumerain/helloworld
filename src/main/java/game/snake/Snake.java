@@ -8,7 +8,7 @@ import java.util.List;
 public class Snake {
 	
 	public static final int START_ROW = 1;
-	public static final int START_COL = 16;
+	public static final int START_COL = 1;
 	
 	private AI ai = new AI();
 	
@@ -48,13 +48,13 @@ public class Snake {
 		// 实例化出蛇的4个初始关节
 		Block header = new Block(Game.UNIT, Color.black, START_ROW, START_COL);
 		Block b1 = new Block(Game.UNIT, Color.gray, START_ROW, START_COL+1);
-		Block b2 = new Block(Game.UNIT, Color.gray, START_ROW, START_COL+2);
-		Block b3 = new Block(Game.UNIT, Color.gray, START_ROW, START_COL+3);
+		//Block b2 = new Block(Game.UNIT, Color.gray, START_ROW, START_COL+2);
+		//Block b3 = new Block(Game.UNIT, Color.gray, START_ROW, START_COL+3);
 		body.clear();
 		body.add(header);
 		body.add(b1);
-		body.add(b2);
-		body.add(b3);
+		//body.add(b2);
+		//body.add(b3);
 	}
 	
 	// 画出蛇的身体
