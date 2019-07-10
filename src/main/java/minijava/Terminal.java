@@ -4,13 +4,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 /**
- * ÃüÁîÐÐ½ÓÊÜÓÃ»§ÊäÈë
+ * å‘½ä»¤è¡ŒæŽ¥å—ç”¨æˆ·è¾“å…¥
  * @author zhangyu
  */
-public class CmdLine {
+public class Terminal {
 	
 	public static void main(String[] args) {
-		new CmdLine().start();
+		new Terminal().start();
 	}
 
 	private boolean multiLine = false;
@@ -18,7 +18,7 @@ public class CmdLine {
 	private BufferedReader reader;
 	private MiniEnv env = new MiniEnv();
 
-	public CmdLine(){
+	public Terminal(){
 		try {
 			reader = new BufferedReader(new InputStreamReader(System.in, System.getProperty("file.encoding")));
 		} catch (Exception e) {
@@ -30,27 +30,27 @@ public class CmdLine {
 		try {
 			String line = null;
 			do {
-				// ¶àÐÐÄ£Ê½¡¢µ¥ÐÐÄ£Ê½ÏÔÊ¾²»Í¬
+				// å¤šè¡Œæ¨¡å¼ã€å•è¡Œæ¨¡å¼æ˜¾ç¤ºä¸åŒ
 				if(multiLine)
 					System.out.print(">>"); 
 				else
 					System.out.print(">");
 				
-				// ½ÓÊÕÊäÈë
+				// æŽ¥æ”¶è¾“å…¥
 				line = reader.readLine();
 				
-				// µ¥ÐÐÄ£Ê½ÏÂÍË³ö±êÊ¶·û
+				// å•è¡Œæ¨¡å¼ä¸‹é€€å‡ºæ ‡è¯†ç¬¦
 				if (!multiLine && "exit".equals(line)) {
 					break;
 				}
 				
-				// ÇÐ»»µ½¶àÐÐÄ£Ê½ÏÂ
+				// åˆ‡æ¢åˆ°å¤šè¡Œæ¨¡å¼ä¸‹
 				if(">>".equals(line)){
 					multiLine = true;
 					continue;
 				}
 				
-				// ÇÐ»»µ½µ¥ÐÐÄ£Ê½ÏÂ
+				// åˆ‡æ¢åˆ°å•è¡Œæ¨¡å¼ä¸‹
 				if(">".equals(line)){
 					multiLine = false;
 					continue;
@@ -58,13 +58,13 @@ public class CmdLine {
 				
 				if(multiLine){
 					if("<<".equals(line)){
-						env.resolve(buff.toString());	// ¶àÐÐÄ£Ê½½â·¢ºó½âÎö
+						env.resolve(buff.toString());	// å¤šè¡Œæ¨¡å¼è§£å‘åŽè§£æž
 						buff.setLength(0);
 					}else{
-						buff.append(line);
+						buff.append(line).append(System.lineSeparator());
 					}					
 				}else{
-					env.resolve(line);							// µ¥ÐÐÄ£Ê½Á¢¼´½âÎö
+					env.resolve(line);							// å•è¡Œæ¨¡å¼ç«‹å³è§£æž
 				}
 			} while (line != null);
 			System.out.println("== Bye ==");

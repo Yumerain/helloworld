@@ -1,7 +1,7 @@
 package minijava;
 
 /**
- * ÃÔÄãÔËĞĞÊ±»·¾³
+ * è¿·ä½ è¿è¡Œæ—¶ç¯å¢ƒ
  * @author zhangyu
  */
 public class MiniEnv {

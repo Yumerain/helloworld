@@ -16,18 +16,18 @@ public class Interpreter {
 		while(pos < text.length()){
 			currChar = text.charAt(pos++);
 			
-			// �հ��ַ�
+			// 空白字符
 			if (currChar == ' ' || currChar == '\t' || currChar == '\r' || currChar == '\n') {
 				continue;
 			}
 			
-			// ����
+			// 整数
 			if (currChar >= '0' && currChar <= '9') {
 				
 				//return new Token(Token.Type.INTEGER, Integer.valueOf(String.valueOf(currChar)));
 			}
 			
-			// ���������
+			// 算术运算符
 			if (Operator.isMathOperator(currChar)) {
 				switch (currChar) {
 				case '+': 	return new Operator(Token.Type.OP_PLUS, currChar);
@@ -40,33 +40,33 @@ public class Interpreter {
 			throw new RuntimeException("Error parsing input");
 		}
 		
-		// ����
+		// 结束
 		return new Token(Token.Type.EOF, null);
 	}
 	
 	
 	/** 
-	 * �ú���У�飨��֤����Ƿ������Ƿ���Ԥ������һ�£����磬INTEGER -> PLUS -> INTEGER��
-	 * �ڽṹȷ������������Ӻ���߱�Ƿ���ֵ�����ұ߱�Ƿ�ֵ��ӣ����ɣ�����ʽ�ģ������
-	 * �������ͽ��㴫���������ı���ʽ���ɹ��������������ʽ�Ľ���� 
+	 * 该函数校验（验证）标记符序列是否与预期序列一致，比如，INTEGER -> PLUS -> INTEGER。
+	 * 在结构确认无误后，它将加号左边标记符的值与其右边标记符值相加，生成（表达式的）结果，
+	 * 这样，就将你传给解释器的表达式，成功计算出算术表达式的结果。 
 	 */
 	public Object expr() {
 		
 		while(pos < text.length()){
 			currChar = text.charAt(pos++);
 			
-			// �հ��ַ�
+			// 空白字符
 			if (currChar == ' ' || currChar == '\t' || currChar == '\r' || currChar == '\n') {
 				continue;
 			}
 			
-			// ����
+			// 整数
 			if (currChar >= '0' && currChar <= '9') {
 				
 				//return new Token(Token.Type.INTEGER, Integer.valueOf(String.valueOf(currChar)));
 			}
 			
-			// ���������
+			// 算术运算符
 			if (Operator.isMathOperator(currChar)) {
 				switch (currChar) {
 				case '+': 	return new Operator(Token.Type.OP_PLUS, currChar);

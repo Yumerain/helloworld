@@ -1,7 +1,7 @@
 package minijava;
 
 /**
- * ±ê¼Ç·û
+ * æ ‡è®°ç¬¦
  * @author zhangyu
  */
 public class Token {
@@ -19,14 +19,14 @@ public class Token {
 	}
 	
 	/**
-	 * Àà±ð
+	 * ç±»åˆ«
 	 */
 	enum Type {
-		INTEGER,				// ÕûÊý 
-		OP_PLUS, 				// ¼Ó·¨
-		OP_MINUS,				// ¼õ·¨
-		OP_MULTIPLY,		// ³Ë·¨
-		OP_DIVISION,			// ³ý·¨
-		EOF							// Êý¾Ý½áÊø
+		INTEGER,				// æ•´æ•° 
+		OP_PLUS, 				// åŠ æ³•
+		OP_MINUS,				// å‡æ³•
+		OP_MULTIPLY,		// ä¹˜æ³•
+		OP_DIVISION,			// é™¤æ³•
+		EOF							// æ•°æ®ç»“æŸ
 	}
 }
