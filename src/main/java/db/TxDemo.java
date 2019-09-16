@@ -1,6 +1,7 @@
 package db;
 
 import java.sql.Connection;
+import java.util.List;
 import java.util.Properties;
 
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
@@ -73,9 +74,23 @@ public class TxDemo {
 			System.out.println("o2-amount:" + o1.getAmountShow());
 		}).start();
 	}
+	
+	public void test2() {
+
+		TradeOrder o = TradeOrder.dao.findById("02777ecdf522420eac8f5a4a039f358e");
+		System.out.println(o.getBalance());
+		
+		o.addBalance(o.getId(), 1L);
+		o = TradeOrder.dao.findById("02777ecdf522420eac8f5a4a039f358e");
+		System.out.println(o.getBalance());
+		
+		o.addBalance(o.getId(), 2L);
+		o = TradeOrder.dao.findById("02777ecdf522420eac8f5a4a039f358e");
+		System.out.println(o.getBalance());
+	}
 
 	public static void main(String[] args) {
-		new TxDemo().test();
+		new TxDemo().test2();
 	}
 	
 }

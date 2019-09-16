@@ -1,5 +1,9 @@
 package minijava;
 
+/**
+ * 解释器
+ * @author rainleaf
+ */
 public class Interpreter {
 	
 	public String text;

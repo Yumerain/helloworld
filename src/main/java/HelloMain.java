@@ -1,24 +1,78 @@
+import java.io.ByteArrayOutputStream;
+import java.text.DecimalFormat;
+import java.util.Random;
+
+import com.jfinal.template.Engine;
 
 public class HelloMain {
-
+	
 	public static void main(String[] args) {
-		String x = "{\"amount\":\"1000\",\"bankType\":\"ABC\",\"cardNo\":\"6228481749154730577\",\"cardType\":\"0\",\"certNo\":\"130733198610101273\",\"certType\":\"01\",\"goodsName\":\"充值\",\"merchCode\":\"000088880000288\",\"merchOrderNo\":\"test0000001341\",\"name\":\"王小宏\",\"notifyUrl\":\"http://localhost:9213/LHPayQuickPay/PayNotify\",\"orderPeriod\":\"10\",\"orgCode\":\"66600197\",\"payType\":\"quick_pay_set\",\"phone\":\"15652225089\",\"remark\":\"快捷测试\",\"userId\":\"test1\",\"version\":\"V1.0\",\"cvn2\":\"123\",\"expired\":\"0120\",\"sign\":\"BB1B14D878C93AF3C751E6BB6DB349F7\"}";
-		System.out.println(x);
+		
 	}
 	
-	/** 报文字段屏蔽专用方法 */
-	public static String hide(String src, String... kws) {
-		StringBuilder sb = new StringBuilder(src);
-		for (int i = 0; i < kws.length; i++) {
-			String kw = "\""+kws[i]+"\":\"";
-			int start = sb.indexOf(kw);
-			int end = sb.indexOf("\"", start+kw.length());
-			StringBuilder str = new StringBuilder();
-			for (int k = 0; k < (end - start-kw.length()); k++) {
-				str.append('*');
-			}
-			sb.replace(start+kw.length(), end, str.toString());
-		}
-		return sb.toString();
+	public static void script(String[] args) {
+		Engine engine = Engine.use();
+ 
+        engine.setDevMode(true);
+        engine.setToClassPathSourceFactory();
+        
+//        engine.getTemplate()
+		
 	}
+	
+	public static void trade() {
+
+		double winP = 0.350;
+		double loseP = 1 - winP;
+		
+		double tp = 0.20;
+		double sl = 0.10;
+		
+		double amt = 100;
+
+		DecimalFormat df = new DecimalFormat("0.00");
+		DecimalFormat df2 = new DecimalFormat("0.00000");
+		Random rd = new Random();
+		
+		for (int i = 0; i < 100; i++) {
+			//double rate = (winP * tp - loseP * sl) / (tp * sl);
+			double rate = winP / sl - loseP / tp;
+			double input = amt * rate;
+			
+			if (rd.nextBoolean()) {
+				amt += input * tp;
+				System.out.println(i + "，比例：" + df2.format(rate) + "，赢，资产：" + df.format(amt));
+			} else {
+				amt -= input * sl;
+				System.out.println(i + "，比例：" + df2.format(rate) + "，输，资产：" + df.format(amt));
+			}
+			
+		}
+	}
+	
+	public static void du() {
+		double winP = 0.5;
+		double loseP = 1 - winP;
+		double b = 1.5;
+		double amt = 100;
+
+		DecimalFormat df = new DecimalFormat("0.00");
+		DecimalFormat df2 = new DecimalFormat("0.000000");
+		Random rd = new Random();
+		
+		for (int i = 0; i < 1000; i++) {
+			double rate = (winP * b - loseP) / b;
+			
+			double input = amt * rate;
+			if (rd.nextBoolean()) {
+				amt += input * b;
+				System.out.println(i + "，比例：" + df2.format(rate) + "，赢，资产：" + df.format(amt));
+			} else {
+				amt -= input;
+				System.out.println(i + "，比例：" + df2.format(rate) + "，输，资产：" + df.format(amt));
+			}
+			
+		}
+	}
+	
 }

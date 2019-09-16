@@ -2,6 +2,8 @@ package db;
 
 import java.text.DecimalFormat;
 
+import com.jfinal.plugin.activerecord.Db;
+
 @SuppressWarnings("serial")
 public class TradeOrder extends BaseTradeOrder<TradeOrder>{
 	
@@ -25,6 +27,10 @@ public class TradeOrder extends BaseTradeOrder<TradeOrder>{
 
 	public java.lang.String getMerchFeeShow() {
 		return new DecimalFormat("0.00").format(getMerchFee()/100.0);
+	}
+	
+	public void addBalance(String id, Long val) {
+		Db.update("update trade_order set balance = (balance + ?) where id = ?", val, id);
 	}
 
 }

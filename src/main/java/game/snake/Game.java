@@ -110,8 +110,8 @@ public class Game extends Thread{
 		}
 		while(true){
 			if(active == true && gameOver == false){
-				//int result = snake.move(fruit);	// 普通移动
-				int result = snake.autoMove(fruit);		// 智能移动
+				int result = snake.move(fruit);	// 普通移动
+				//int result = snake.autoMove(fruit);		// 智能移动
 				if(result == 1){
 					score += 100;
 					if(score >= clearScore){
@@ -124,7 +124,7 @@ public class Game extends Thread{
 				}
 			}
 			try {
-				Thread.sleep(100);
+				Thread.sleep(50);
 			} catch (Exception e) {
 			}
 		}
