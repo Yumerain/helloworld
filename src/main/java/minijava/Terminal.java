@@ -1,6 +1,7 @@
 package minijava;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
@@ -16,7 +17,7 @@ public class Terminal {
 	private boolean multiLine = false;
 	private StringBuilder buff = new StringBuilder();
 	private BufferedReader reader;
-	private MiniEnv env = new MiniEnv();
+	private Env env = new Env();
 
 	public Terminal(){
 		try {
@@ -68,7 +69,7 @@ public class Terminal {
 				}
 			} while (line != null);
 			System.out.println("== Bye ==");
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
