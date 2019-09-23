@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import minijava.stat.ast.Stat;
+
+
 /**
  * 命令行接受用户输入
  * @author zhangyu
@@ -59,18 +62,29 @@ public class Terminal {
 				
 				if(multiLine){
 					if("<<".equals(line)){
-						env.resolve(buff.toString());	// 多行模式解发后解析
+						resolve(buff.toString());	// 多行模式解发后解析
 						buff.setLength(0);
 					}else{
 						buff.append(line).append(System.lineSeparator());
 					}					
 				}else{
-					env.resolve(line);							// 单行模式立即解析
+					resolve(line);							// 单行模式立即解析
 				}
 			} while (line != null);
 			System.out.println("== Bye ==");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+
+	public void resolve(String line) {
+		System.out.println(line);
+		Env env = new Env(new EngineConfig());
+		Parser parser = new Parser(env, new StringBuilder(line), "");
+//		if (devMode) {
+//			env.addSource(source);
+//		}
+		Stat stat = parser.parse();
 	}
 }

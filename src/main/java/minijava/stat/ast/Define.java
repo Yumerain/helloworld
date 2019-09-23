@@ -1,12 +1,13 @@
-package minijava.ast;
+package minijava.stat.ast;
 
 import minijava.Env;
-import minijava.ExprList;
-import minijava.Location;
-import minijava.ParseException;
-import minijava.Scope;
 import minijava.TemplateException;
-import minijava.Writer;
+import minijava.expr.ast.Expr;
+import minijava.expr.ast.ExprList;
+import minijava.io.Writer;
+import minijava.stat.Location;
+import minijava.stat.ParseException;
+import minijava.stat.Scope;
 
 /**
  * Define 定义模板函数：

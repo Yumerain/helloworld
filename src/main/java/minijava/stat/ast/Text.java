@@ -1,4 +1,4 @@
-package minijava.ast;
+package minijava.stat.ast;
 
 
 import java.io.IOException;
@@ -7,9 +7,9 @@ import java.nio.charset.Charset;
 import com.jfinal.template.io.IWritable;
 
 import minijava.Env;
-import minijava.Scope;
 import minijava.TemplateException;
-import minijava.Writer;
+import minijava.io.Writer;
+import minijava.stat.Scope;
 /**
  * Text 输出纯文本块以及使用 "#[[" 与 "]]#" 定义的原样输出块
  */

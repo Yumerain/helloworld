@@ -1,4 +1,4 @@
-package minijava;
+package minijava.stat;
 
 
 /**

@@ -1,5 +1,6 @@
 package minijava;
 
+import minijava.stat.Location;
 
 /**
  * Template runtime exception

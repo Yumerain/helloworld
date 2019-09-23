@@ -1,7 +1,8 @@
 
 package minijava;
 
-import minijava.ast.Expr;
+import minijava.expr.ast.Expr;
+import minijava.stat.Scope;
 
 /**
  * NullExpr

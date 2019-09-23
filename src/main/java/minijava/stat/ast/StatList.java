@@ -1,12 +1,12 @@
-package minijava.ast;
+package minijava.stat.ast;
 
 import java.util.List;
 
 import minijava.Ctrl;
 import minijava.Env;
-import minijava.Scope;
 import minijava.TemplateException;
-import minijava.Writer;
+import minijava.io.Writer;
+import minijava.stat.Scope;
 
 /**
  * StatList

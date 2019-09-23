@@ -1,13 +1,13 @@
-package minijava.ast;
+package minijava.stat.ast;
 
 import java.io.IOException;
 
 import minijava.Env;
-import minijava.ExprList;
-import minijava.Location;
-import minijava.Scope;
 import minijava.TemplateException;
-import minijava.Writer;
+import minijava.expr.ast.ExprList;
+import minijava.io.Writer;
+import minijava.stat.Location;
+import minijava.stat.Scope;
 
 public abstract class Stat {
 	

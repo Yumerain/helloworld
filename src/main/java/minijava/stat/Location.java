@@ -1,4 +1,4 @@
-package minijava;
+package minijava.stat;
 /**
  * Location
  * 生成异常发生的位置消息

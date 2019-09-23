@@ -5,6 +5,10 @@ package minijava;
 import java.util.ArrayList;
 import java.util.List;
 
+import minijava.stat.CharTable;
+import minijava.stat.Location;
+import minijava.stat.ParseException;
+
 /**
  * DKFF(Dynamic Key Feature Forward) Lexer
  */

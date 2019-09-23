@@ -1,5 +1,4 @@
-package minijava;
-
+package minijava.stat;
 
 /**
  * ParseException

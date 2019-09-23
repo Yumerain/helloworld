@@ -7,6 +7,10 @@ public class HelloMain {
 	
 	public static void main(String[] args) {
 		
+		
+		
+		
+		
 	}
 	
 	public static void script(String[] args) {

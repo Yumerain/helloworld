@@ -8,16 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.jfinal.kit.StrKit;
-import com.jfinal.template.Directive;
-import com.jfinal.template.expr.ast.ExprList;
+import com.jfinal.template.OutputDirectiveFactory;
 import com.jfinal.template.expr.ast.SharedMethodKit;
-import com.jfinal.template.ext.directive.CallDirective;
-import com.jfinal.template.ext.directive.DateDirective;
-import com.jfinal.template.ext.directive.EscapeDirective;
-import com.jfinal.template.ext.directive.NumberDirective;
-import com.jfinal.template.ext.directive.RandomDirective;
-import com.jfinal.template.ext.directive.RenderDirective;
-import com.jfinal.template.ext.directive.StringDirective;
 import com.jfinal.template.ext.sharedmethod.SharedMethodLib;
 import com.jfinal.template.io.EncoderFactory;
 import com.jfinal.template.io.WriterBuffer;
@@ -25,11 +17,12 @@ import com.jfinal.template.source.FileSource;
 import com.jfinal.template.source.FileSourceFactory;
 import com.jfinal.template.source.ISource;
 import com.jfinal.template.source.ISourceFactory;
-import com.jfinal.template.source.StringSource;
-import com.jfinal.template.stat.Location;
-import com.jfinal.template.stat.OutputDirectiveFactory;
-import com.jfinal.template.stat.ast.Define;
-import com.jfinal.template.stat.ast.Output;
+
+import minijava.expr.ast.ExprList;
+import minijava.stat.Location;
+import minijava.stat.ast.Define;
+import minijava.stat.ast.Output;
+
 
 /**
  * EngineConfig
@@ -58,13 +51,13 @@ public class EngineConfig {
 	
 	public EngineConfig() {
 		// Add official directive of Template Engine
-		addDirective("render", RenderDirective.class);
-		addDirective("date", DateDirective.class);
-		addDirective("escape", EscapeDirective.class);
-		addDirective("string", StringDirective.class);
-		addDirective("random", RandomDirective.class);
-		addDirective("number", NumberDirective.class);
-		addDirective("call", CallDirective.class);
+//		addDirective("render", RenderDirective.class);
+//		addDirective("date", DateDirective.class);
+//		addDirective("escape", EscapeDirective.class);
+//		addDirective("string", StringDirective.class);
+//		addDirective("random", RandomDirective.class);
+//		addDirective("number", NumberDirective.class);
+//		addDirective("call", CallDirective.class);
 		
 		// Add official shared method of Template Engine
 		addSharedMethod(new SharedMethodLib());
@@ -215,7 +208,8 @@ public class EngineConfig {
 	}
 	
 	public Output getOutputDirective(ExprList exprList, Location location) {
-		return outputDirectiveFactory.getOutputDirective(exprList, location);
+//		return outputDirectiveFactory.getOutputDirective(exprList, location);
+		return null;
 	}
 	
 	/**

@@ -1,13 +1,16 @@
 package minijava;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.jfinal.template.source.ISource;
 
-import minijava.ast.Define;
+import minijava.stat.Location;
+import minijava.stat.ParseException;
+import minijava.stat.ast.Define;
 
 /**
  * Env
@@ -24,9 +27,12 @@ public class Env {
 	// 代替 Template 持有该属性，便于在 #include 指令中调用 Env.addSource()
 	protected List<ISource> sourceList = null;
 	
-//	public Env(EngineConfig engineConfig) {
-//		this.engineConfig = engineConfig;
-//	}
+	public Env() {
+	}
+	
+	public Env(EngineConfig engineConfig) {
+		this.engineConfig = engineConfig;
+	}
 	
 	public EngineConfig getEngineConfig() {
 		return engineConfig;
@@ -95,20 +101,17 @@ public class Env {
 		return false;
 	}
 	
-//	/**
-//	 * 添加本 Template 的 ISource，以及该 Template 使用 include 包含进来的所有 ISource
-//	 * 以便于在 devMode 之下判断该 Template 是否被 modified，进而 reload 该 Template
-//	 */
-//	public void addSource(ISource source) {
-//		if (sourceList == null) {
-//			sourceList = new ArrayList<ISource>();
-//		}
-//		sourceList.add(source);
-//	}
-	
-	public void resolve(String line) {
-		System.out.println(line);
+	/**
+	 * 添加本 Template 的 ISource，以及该 Template 使用 include 包含进来的所有 ISource
+	 * 以便于在 devMode 之下判断该 Template 是否被 modified，进而 reload 该 Template
+	 */
+	public void addSource(ISource source) {
+		if (sourceList == null) {
+			sourceList = new ArrayList<ISource>();
+		}
+		sourceList.add(source);
 	}
+	
 }
 
 

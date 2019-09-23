@@ -1,8 +1,8 @@
-package minijava.ast;
+package minijava.stat.ast;
 
 import minijava.Env;
-import minijava.Scope;
-import minijava.Writer;
+import minijava.io.Writer;
+import minijava.stat.Scope;
 
 /**
  * NullStat

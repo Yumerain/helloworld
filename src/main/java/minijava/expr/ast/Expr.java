@@ -1,7 +1,7 @@
-package minijava.ast;
+package minijava.expr.ast;
 
-import minijava.Location;
-import minijava.Scope;
+import minijava.stat.Location;
+import minijava.stat.Scope;
 
 /**
  * Expr

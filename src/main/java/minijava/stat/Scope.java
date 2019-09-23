@@ -1,7 +1,9 @@
-package minijava;
+package minijava.stat;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import minijava.Ctrl;
 
 /**
  * Scope

@@ -1,6 +1,7 @@
-package minijava.ast;
+package minijava.stat.ast;
 
-import minijava.Scope;
+import minijava.expr.ast.Expr;
+import minijava.stat.Scope;
 
 /**
  * Id

@@ -1,9 +1,11 @@
-package minijava;
+package minijava.io;
 
 import java.io.IOException;
 import java.util.Date;
 
 import com.jfinal.template.io.IWritable;
+
+import minijava.DateFormats;
 
 /**
  * Writer

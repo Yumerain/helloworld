@@ -1,9 +1,11 @@
-package minijava;
+package minijava.expr.ast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import minijava.ast.Expr;
+import minijava.NullExpr;
+import minijava.TemplateException;
+import minijava.stat.Scope;
 
 /**
  * ExprList
