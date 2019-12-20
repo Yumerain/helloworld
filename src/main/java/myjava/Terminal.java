@@ -1,10 +1,8 @@
-package minijava;
+package myjava;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
-import minijava.stat.ast.Stat;
 
 
 /**
@@ -20,7 +18,6 @@ public class Terminal {
 	private boolean multiLine = false;
 	private StringBuilder buff = new StringBuilder();
 	private BufferedReader reader;
-	private Env env = new Env();
 
 	public Terminal(){
 		try {
@@ -80,11 +77,6 @@ public class Terminal {
 
 	public void resolve(String content) {
 		System.out.println(content);
-		Env env = new Env(new EngineConfig());
-		Parser parser = new Parser(env, new StringBuilder(content), "");
-//		if (devMode) {
-//			env.addSource(source);
-//		}
-		Stat stat = parser.parse();
+		
 	}
 }

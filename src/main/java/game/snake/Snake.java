@@ -40,14 +40,14 @@ public class Snake {
 	
 	public void init() {
 		// 蛇前进的方向：← ↑ → ↓ 
-		this.direction = '←';
-		this.nextDirection = '←';
+		this.direction = '→';
+		this.nextDirection = '→';
 		// 蛇头起始位置
 		this.row = START_ROW;
 		this.col = START_COL;	
 		// 实例化出蛇的4个初始关节
 		Block header = new Block(Game.UNIT, Color.black, START_ROW, START_COL);
-		Block b1 = new Block(Game.UNIT, Color.gray, START_ROW, START_COL+1);
+		Block b1 = new Block(Game.UNIT, Color.gray, START_ROW, START_COL-1);
 		//Block b2 = new Block(Game.UNIT, Color.gray, START_ROW, START_COL+2);
 		//Block b3 = new Block(Game.UNIT, Color.gray, START_ROW, START_COL+3);
 		body.clear();
@@ -71,8 +71,9 @@ public class Snake {
 	 */
 	public int autoMove(Block fruit){
 		// AI思考
-		ai.think(this, fruit, rows, cols);
-		return move(fruit);
+		//ai.think(this, fruit, rows, cols);
+		//return move(fruit);
+		return 0;
 	}
 	
 	/**
@@ -80,7 +81,7 @@ public class Snake {
 	 * @param fruit
 	 * @return 1-吃到水果；2-普通移动
 	 */
-	public int move(Block fruit){
+	public int move(List<Block> fruits){
 		// 跟据蛇的前进方向，判断出蛇头的下一个新位置
 		switch (nextDirection) {
 		case '←':
@@ -106,10 +107,20 @@ public class Snake {
 		body.add(0, newHeader);
 		
 		// ①如果新的蛇头位置与水果相同，则蛇吃到了水果，长长一节
-		if(col == fruit.getColIndex() && row == fruit.getRowIndex()){
-			// 吃到水果，直接返回，不用移除蛇尾
+		int eatIndex = -1;
+		for (int i = 0; i < fruits.size(); i++) {
+			Block fruit = fruits.get(i);
+			if(col == fruit.getColIndex() && row == fruit.getRowIndex()){
+				// 吃到水果，直接返回，不用移除蛇尾
+				eatIndex = i;
+				break;
+			}
+		}
+		// 移除被吃掉的水果
+		if(eatIndex >= 0){
+			fruits.remove(eatIndex);
 			return 1;
-		}		
+		}
 		// 新增了一个蛇头后，移除蛇尾，表示蛇前进了一格
 		body.remove(body.size() - 1);
 		

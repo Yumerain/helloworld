@@ -2,6 +2,9 @@ package game.snake;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Game extends Thread{
 	
@@ -9,6 +12,9 @@ public class Game extends Thread{
 		Color.red,Color.green,Color.blue,
 		Color.yellow,Color.orange,Color.cyan
 	};
+	
+	// 随机数生成器
+	private Random random = new Random();
 	
 	// 游戏格子的行数
 	private int rows = 20;
@@ -28,7 +34,7 @@ public class Game extends Thread{
 	private Snake snake;
 	
 	// 水果
-	private Block fruit;
+	private List<Block> fruits = new ArrayList<>();
 	
 	// 表示游戏是否结束
 	private boolean gameOver = false;
@@ -56,8 +62,8 @@ public class Game extends Thread{
 		clearScore = total;
 		if(clearScore > total) clearScore = total;
 		snake.init();
-		// 创建一个位置随机的水果
-		fruit = createFruit();
+		// 创建随机的水果
+		createFruit();
 	}
 	
 	public int getWidth(){
@@ -74,8 +80,11 @@ public class Game extends Thread{
 		g.clearRect(0, 0, width, height);
 		
 		// 画出水果
-		g.setColor(fruit.getColor());
-		g.fillRect(fruit.getColIndex()*UNIT, fruit.getRowIndex()*UNIT, fruit.getUnit(), fruit.getUnit());
+		for (int i = 0; i < fruits.size(); i++) {
+			Block fruit = fruits.get(i);
+			g.setColor(fruit.getColor());
+			g.fillRect(fruit.getColIndex()*UNIT, fruit.getRowIndex()*UNIT, fruit.getUnit(), fruit.getUnit());
+		}
 		
 		// 输出文字：请按回车键开始游戏
 		
@@ -86,7 +95,8 @@ public class Game extends Thread{
 		
 		// 画出游戏分数
 		g.setColor(Color.blue);
-		g.drawString("分数："+score, 10, 30);
+		g.drawString("当前总计得分数："+score, 10, 40);
+		g.drawString("地图上水果个数："+fruits.size(), 10, 20);
 		
 		// 画出文字：Game Over
 		g.setColor(Color.red);
@@ -104,13 +114,9 @@ public class Game extends Thread{
 	}
 	
 	public void run(){
-		try {
-			Thread.sleep(1000);
-		} catch (Exception e) {
-		}
 		while(true){
 			if(active == true && gameOver == false){
-				int result = snake.move(fruit);	// 普通移动
+				int result = snake.move(fruits);	// 普通移动
 				//int result = snake.autoMove(fruit);		// 智能移动
 				if(result == 1){
 					score += 100;
@@ -118,33 +124,57 @@ public class Game extends Thread{
 						clear = true;
 						break;
 					}
-					fruit = createFruit();
+					if(fruits.isEmpty()){
+						createFruit();
+					}
 				}else if(result == -1){
 					gameOver = true;
 				}
 			}
 			try {
-				Thread.sleep(50);
+				Thread.sleep(100);
 			} catch (Exception e) {
 			}
 		}
 	}
 	
-	// 创建一个位置随机的水果
-	public Block createFruit(){
-		int r = rows;
-		int c = cols;
-		// 保证行位置与列位置在游戏的行列之中，并且不与蛇的身体重复
-		while(r >= rows || c >= cols || snake.check(r, c)){
-			r = (int)(Math.random()*10*rows);
-			c = (int)(Math.random()*10*cols);
+	// 随机创建几个位置的水果
+	public void createFruit(){
+		// 地图剩余格子
+		int remain = cols * rows - snake.body.size() - fruits.size();
+		int count = random.nextInt(5);
+		// 生成的水果数量不能超过剩余格子
+		if(count>remain){
+			count = remain;
 		}
-		int rd = 6;
-		while(rd >5){
-			rd = (int)(Math.random()*10);
+		if(count==0){
+			count = 1;
 		}
-		Block block = new Block(UNIT, colors[rd], r, c);		
-		return block;
+		for (int i = 0; i < count; i++) {
+			int r = rows;
+			int c = cols;
+			// 保证行位置与列位置在游戏的行列之中，并且不与蛇的身体重复，不与已有水果重复
+			while(r >= rows || c >= cols || snake.check(r, c) || fruitCheck(r, c)){
+				r = random.nextInt(rows);
+				c = random.nextInt(cols);
+			}
+			int rdColor = 6;
+			while(rdColor >5){
+				rdColor = (int)(Math.random()*10);
+			}
+			Block block = new Block(UNIT, colors[rdColor], r, c);	
+			fruits.add(block);
+		}	
+	}
+	
+	public boolean fruitCheck(int r, int c){
+		for (int i = 0; i < fruits.size(); i++) {
+			Block item = fruits.get(i);
+			if(c==item.getColIndex() && r==item.getRowIndex()){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	// 创建键监听事件实例
