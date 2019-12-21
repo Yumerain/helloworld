@@ -12,13 +12,13 @@ public class Block {
 		this.colIndex = c;
 	}
 	// 单元大小
-	private int unit;
+	protected int unit;
 	// 单元颜色
-	private Color color;
+	protected Color color;
 	// 单元格所在的行
-	private int rowIndex;
+	protected int rowIndex;
 	// 单元格所在的列
-	private int colIndex;
+	protected int colIndex;
 	
 	public void setUnit(int unit){
 		this.unit = unit;

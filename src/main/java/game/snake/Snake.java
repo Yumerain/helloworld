@@ -81,7 +81,7 @@ public class Snake {
 	 * @param fruit
 	 * @return 1-吃到水果；2-普通移动
 	 */
-	public int move(List<Block> fruits){
+	public int move(List<Fruit> fruits){
 		// 跟据蛇的前进方向，判断出蛇头的下一个新位置
 		switch (nextDirection) {
 		case '←':

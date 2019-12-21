@@ -20,18 +20,23 @@ public class GameKeyListener implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case 37: // 左
+		case 65:
 			snake.turnLeft();
 			break;
 		case 40: // 下
+		case 83:
 			snake.turnDown();
 			break;
 		case 39: // 右
+		case 68:
 			snake.turnRight();
 			break;
 		case 38: // 上
+		case 87:
 			snake.turnUp();
 			break;
 		case 10: // 激活/暂停
+		case 32:
 			game.toggleActive();
 			break;
 		}
